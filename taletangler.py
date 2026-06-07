@@ -8,7 +8,7 @@ lightly-formatted text files and presents them to the user as interactive storie
 Usage: taletangler.py [storyfile.txt]
 """
 import argparse
-from parser import Parser
+from story_parser import Parser
 from errors import story_exists
 
 
@@ -24,16 +24,16 @@ def handle_story_ending():
 
 def main():
     # Open and process the story file
-    parser = argparse.ArgumentParser()
-    parser.add_argument("story_file", type=story_exists)
-    parser.add_argument("-d", "--debug", action="store_true")
-    story_file, debug_mode = parser.parse_args()
-    if debug_mode:
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument("story_file", type=story_exists)
+    arg_parser.add_argument("-d", "--debug", action="store_true")
+    args = arg_parser.parse_args()
+    if args.debug:
         parser_mode = "Verbose"
     else:
         parser_mode = "Normal"
     story_parser = Parser(parser_mode)
-    story, cur_scene = story_parser.process_story(story_file)
+    story, cur_scene = story_parser.process_story(args.story_file)
 
 
     # Present story introduction and instructions

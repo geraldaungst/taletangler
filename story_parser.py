@@ -1,9 +1,27 @@
 #!/usr/bin/env python3
 """
-parser.py
+story_parser.py
 
 Description: Text file parser for TaleTangler
 """
+
+# TODO: Issues to resolve in process_story and parse_* methods
+#
+# TODO: 1. parse_scene: note about unexpected text fires even on valid "scene:" lines —
+#    fix the conditional structure so the note only appends on genuinely unexpected text
+#
+# TODO: 2. parse_choices: blank/whitespace lines will crash on line[0] — add an empty
+#    line guard before the "-" check
+#
+# TODO: 3. choice_count: used before assignment on the first scene — determine where
+#    initialization belongs
+#
+# TODO: 4. choices are overwritten instead of appended — story.scenes[current_scene].choices
+#    should use append(), not assignment
+#
+# TODO: 5. process_story returns scene_tag (last tag parsed) instead of current_scene
+#    (first scene parsed) — verify which one the caller actually needs
+
 import re
 import errors
 from story_models import Story, Scene, Choice

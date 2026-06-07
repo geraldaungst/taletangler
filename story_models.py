@@ -14,10 +14,10 @@ class Story:
     def display_scene(self, cur_scene):
         pass
 
-    def get_reader_choice(self):
+    def get_reader_choice(self, cur_scene):
         pass
 
-    def handle_choice(self, cur_scene):
+    def handle_choice(self, cur_scene, reader_choice):
         pass
 
 
