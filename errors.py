@@ -8,6 +8,7 @@ class ErrText(Enum):
     NO_ACTIVE_SCENE = "No active scene for description"
     NO_SCENE_TAG = "Scene is missing a scene tag."
     UNEXPECTED_FRONTMATTER = "Unexpected text before the scene: tag line."
+    MALFORMED_CHOICE = "Choice text not formatted correctly. Must begin with '-' and contain one '->'."
 
 class FileFormatError(ValueError):
     """Raised when a story file does not match the expected format."""

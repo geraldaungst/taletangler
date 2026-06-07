@@ -70,7 +70,7 @@ class Parser():
                 self.active_scene = scene_tag
                 self.state = State.DESCRIPTION  # This state is always a single line
             else:
-                raise FileFormatError(errors.ErrText.NO_SCENE_TAG)
+                raise errors.FileFormatError(errors.ErrText.NO_SCENE_TAG)
         return scene
 
 
@@ -83,12 +83,21 @@ class Parser():
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
             self.scenes[self.active_scene].description.append(line)
         else:
-            raise FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
+            raise errors.FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
 
 
     def parse_choices(self, story, line):
-        norm_line = self.normalize(line) # normalized line
-        pass
+        line = strip(line) # normalized line
+        if norm_line == "choice:":  # Skip to next line
+            return None, None
+        if line[0] != "-":
+            raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
+        choice, destination, *extra = line.split("->")
+        if extra or not destination:
+            raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
+        choice = choice.strip("-").strip()
+        return choice, destination.strip()
+
 
     def process_story(story_file):
         self.state = State.FRONTMATTER
@@ -102,9 +111,13 @@ class Parser():
                 if self.state == State.TAG:
                     scene = self.parse_tagline(line)
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
+                    choice_count = 0    # Sets choice count for new scene to zero for later states
                     continue    # Tag line is standalone so it should not get processed by the next state
                 if self.state == State.DESCRIPTION:
                     self.parse_description(story, line)
                 if self.state == State.CHOICES:
-                    story = self.parse_choices(story, line)
+                    choice, destination = self.parse_choices(story, line, choice_count)
+                    if not choice:  # Choice not found on this line
+                        continue    # move on to the next line
+
         return story
