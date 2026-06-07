@@ -6,6 +6,8 @@ Description: Text file parser for TaleTangler
 """
 import re
 import errors
+from story_models import Choice
+
 
 class State(Enum):
     FRONTMATTER = auto()
@@ -59,7 +61,7 @@ class Parser():
             # TODO: Consider adding code to note-printing function to eliminate consecutive duplicates?
             self.notes.append(errors.ErrText.UNEXPECTED_FRONTMATTER)
 
-    def parse_tagline(self, story, line):
+    def parse_tagline(self, line):
         # This state is a single line that handles the scene: tag and updates the parser's active scene
         norm_line = self.normalize(line) # normalized line
         scene = None
@@ -74,7 +76,7 @@ class Parser():
         return scene
 
 
-    def parse_description(self, story, line):
+    def parse_description(self, line):
         # In this state, all text is collected verbatim. The assumption is this part is written as the
         # author intended
         norm_line = self.normalize(line) # normalized line
@@ -86,17 +88,23 @@ class Parser():
             raise errors.FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
 
 
-    def parse_choices(self, story, line):
+    def parse_choices(self, line):
         line = strip(line) # normalized line
-        if norm_line == "choice:":  # Skip to next line
-            return None, None
+        if line == "choice:":  # Skip to next line
+            return None
+        if line[:3] in ("---", "==="):
+            self.state = State.SCENE
+            return None
+        if self.normalize(line) == "scene:":
+            self.state = State.TAG
+            return None
         if line[0] != "-":
             raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
-        choice, destination, *extra = line.split("->")
-        if extra or not destination:
+        prompt, next_scene, *extra = line.split("->")
+        if extra or not next_scene:     # Choice line must have exactly one "->"
             raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
-        choice = choice.strip("-").strip()
-        return choice, destination.strip()
+        prompt = prompt.strip("-").strip()
+        return prompt, next_scene.strip()
 
 
     def process_story(story_file):
@@ -108,16 +116,20 @@ class Parser():
                     self.parse_frontmatter(story, line)
                 if self.state == State.SCENE:
                     self.parse_scene(line)
+                if self.state == State.DESCRIPTION:
+                    self.parse_description(story, line)
+                if self.state == State.CHOICES:
+                    result = self.parse_choices(story, line, choice_count)
+                    if result:
+                        choice_count += 1
+                        prompt, next_scene = result
+                        story.choices[choice_count] = Choice(prompt, next_scene)
+                    # If result is None, state was changed to one of these
+                    #   State.TAG: parser will move to the statement below
+                    #   State.SCENE: continue to the next line of text
                 if self.state == State.TAG:
                     scene = self.parse_tagline(line)
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
                     choice_count = 0    # Sets choice count for new scene to zero for later states
-                    continue    # Tag line is standalone so it should not get processed by the next state
-                if self.state == State.DESCRIPTION:
-                    self.parse_description(story, line)
-                if self.state == State.CHOICES:
-                    choice, destination = self.parse_choices(story, line, choice_count)
-                    if not choice:  # Choice not found on this line
-                        continue    # move on to the next line
 
         return story
