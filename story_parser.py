@@ -9,6 +9,15 @@ import errors
 from story_models import Story, Scene, Choice
 from enum import Enum, auto
 
+# TODO: Debugging session needed — two known issues from first test run
+#   1. All choices are attaching to the first scene instead of their respective scenes.
+#      Suspected cause: current_scene not updating correctly when a new scene is encountered.
+#      Check process_story logic around State.TAG handling and current_scene assignment.
+#   2. Last two scenes in the file appear as raw unparsed text.
+#      Parser appears to stop processing at some point and treat remaining lines as description.
+#      Step through with PyCharm debugger, watching self.state and current_scene on each line.
+#   Plan: Use PyCharm debugger to step through spec_example.txt and monitor state transitions.
+
 SCENE_SEPARATORS = ["---", "===", "***"]
 
 class State(Enum):
@@ -95,7 +104,7 @@ class Parser:
 
     def parse_choices(self, line):
         line = line.strip() # normalized line
-        if line == "choice:" or line == "":  # Skip to next line
+        if self.normalize(line) == "choices:" or line == "":  # Skip to next line
             return None
         if line[:3] in SCENE_SEPARATORS:
             self.state = State.SCENE
@@ -103,7 +112,10 @@ class Parser:
         if self.normalize(line)[:7] == "scene:":
             self.state = State.TAG
             return None
+        if self.normalize(line) == "theend":
+            return line, "theend"
         if line[0] != "-":
+            print(f"ERROR in line: {line}")
             raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
         prompt, next_scene, *extra = line.split("->")
         if extra or not next_scene:     # Choice line must have exactly one "->"
