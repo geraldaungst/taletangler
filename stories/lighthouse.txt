@@ -1,0 +1,168 @@
+title: The Lighthouse Keeper's Secret
+author: TaleTangler Test Suite
+
+scene: Start
+
+You arrive at the base of an old lighthouse on a foggy evening.
+The door is slightly ajar. A light flickers from somewhere above.
+Your boat is tied at the dock behind you.
+
+Choices:
+- Push open the door and go inside -> Main Hall
+- Search the dock area first -> The Dock
+- Leave while you still can -> Safe Escape
+
+---
+
+scene: Main Hall
+
+The entrance hall smells of salt and old wood. A spiral staircase
+leads up toward the light. A narrow door on the left is labeled
+"STORAGE". Footsteps creak from somewhere above you.
+
+Choices:
+- Climb the spiral staircase -> The Lamp Room
+- Open the storage door -> Storage Room
+- Run back outside -> Start
+
+---
+
+scene: The Dock
+
+A small rowboat is tied next to yours — someone else is here.
+A waterproof satchel sits in the bow. The lighthouse looms behind you.
+
+Choices:
+- Open the satchel -> The Satchel
+- Go back and enter the lighthouse -> Main Hall
+
+---
+
+scene: The Satchel
+
+Inside the satchel you find a logbook, a compass, and a folded map.
+The map shows a small island marked with an X, not far offshore.
+You pocket the map.
+
+Choices:
+- Row out to the island -> The Island
+- Head into the lighthouse with what you found -> Main Hall
+
+---
+
+scene: Storage Room
+
+Shelves of old equipment line the walls. In the corner, a trapdoor
+leads down into darkness. A lantern hangs on a hook by the door.
+
+Choices:
+- Take the lantern and descend through the trapdoor -> The Cellar
+- Go back to the main hall -> Main Hall
+
+---
+
+scene: The Cellar
+
+The cellar is cold and damp. Your lantern reveals a locked iron chest
+and a tunnel leading toward the sea. The chest has a three-digit lock.
+
+Choices:
+- Try the combination 4 1 7 -> Wrong Combination
+- Follow the tunnel toward the sea -> Sea Cave
+
+---
+
+scene: Wrong Combination
+
+The lock doesn't budge. Something shifts in the darkness behind you.
+You decide not to press your luck.
+
+Choices:
+- Follow the tunnel instead -> Sea Cave
+- Retreat back upstairs -> Main Hall
+
+---
+
+scene: Sea Cave
+
+The tunnel opens into a hidden sea cave. Crates stamped with foreign
+ports are stacked against the walls. You realize what this place is.
+The tide is coming in fast.
+
+Choices:
+- Grab one crate and swim for it -> Smuggler's Ending
+- Leave everything and run back -> Main Hall
+
+---
+
+scene: The Lamp Room
+
+At the top of the stairs, an old man sits beside the lamp mechanism,
+turning a brass key slowly. He looks up without surprise.
+"I wondered when someone would come," he says.
+
+Choices:
+- Ask him about the rowboat at the dock -> The Confession
+- Back away slowly down the stairs -> Main Hall
+
+---
+
+scene: The Confession
+
+The old man tells you everything. The crates, the tunnels, the island.
+He seems relieved. He asks you to decide what happens next.
+
+Choices:
+- Turn him in to the authorities -> Justice Ending
+- Keep his secret and leave -> Silence Ending
+
+---
+
+scene: The Island
+
+The island is deserted except for a weathered cairn of stones.
+Beneath it, wrapped in oilcloth, is a journal dating back forty years.
+The lighthouse keeper's name is on the first page.
+
+Choices:
+- Row back and confront the keeper -> The Lamp Room
+- Take the journal and leave quietly -> Silence Ending
+
+---
+
+scene: Safe Escape
+
+You untie your boat and row away from the lighthouse.
+The fog closes in behind you. You never find out what was inside.
+Some mysteries are better left alone.
+
+THE END
+
+---
+
+scene: Smuggler's Ending
+
+You surface near your boat, crate in tow, and row hard for the mainland.
+By morning you have more questions than answers — and one piece of evidence.
+Whatever happens next is out of the lighthouse keeper's hands.
+
+THE END
+
+---
+
+scene: Justice Ending
+
+The authorities arrive by dawn. The tunnels, the crates, the island —
+all of it comes to light. The old keeper looks almost grateful.
+You never learned his name.
+
+THE END
+
+---
+
+scene: Silence Ending
+
+You leave the lighthouse behind and say nothing to anyone.
+Years later, you still wonder if you made the right choice.
+
+THE END
