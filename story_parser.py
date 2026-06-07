@@ -4,29 +4,12 @@ story_parser.py
 
 Description: Text file parser for TaleTangler
 """
-
-# TODO: Issues to resolve in process_story and parse_* methods
-#
-# TODO: 1. parse_scene: note about unexpected text fires even on valid "scene:" lines —
-#    fix the conditional structure so the note only appends on genuinely unexpected text
-#
-# TODO: 2. parse_choices: blank/whitespace lines will crash on line[0] — add an empty
-#    line guard before the "-" check
-#
-# TODO: 3. choice_count: used before assignment on the first scene — determine where
-#    initialization belongs
-#
-# TODO: 4. choices are overwritten instead of appended — story.scenes[current_scene].choices
-#    should use append(), not assignment
-#
-# TODO: 5. process_story returns scene_tag (last tag parsed) instead of current_scene
-#    (first scene parsed) — verify which one the caller actually needs
-
 import re
 import errors
 from story_models import Story, Scene, Choice
 from enum import Enum, auto
 
+SCENE_SEPARATORS = ["---", "===", "***"]
 
 class State(Enum):
     FRONTMATTER = auto()
@@ -63,7 +46,7 @@ class Parser:
             story.author = line[7:].strip()
         elif norm_line[:6] == "scene:":
             self.state = State.TAG
-        elif norm_line[:3] in ("---", "==="):
+        elif norm_line[:3] in SCENE_SEPARATORS:
             self.state = State.SCENE
         elif norm_line == "choices:":
             self.state = State.CHOICES
@@ -74,7 +57,7 @@ class Parser:
         norm_line = self.normalize(line) # normalized line
         if norm_line[:6] == "scene:":
             self.state = State.TAG
-        if len(norm_line) > 0:
+        elif len(norm_line) > 0:
             # For now, multiple unexpected lines will result in multiple identical notes
             # This may be cleaned up in later versions of the code
             # TODO: Consider adding code to note-printing function to eliminate consecutive duplicates?
@@ -102,7 +85,7 @@ class Parser:
         norm_line = self.normalize(line) # normalized line
         if norm_line == "choices:":
             self.state = State.CHOICES
-        elif norm_line == "scene:" or norm_line[:3] in ("---", "==="):
+        elif norm_line == "scene:" or norm_line[:3] in SCENE_SEPARATORS:
             raise errors.FileFormatError(errors.ErrText.NO_CHOICES)
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
             story.scenes[self.active_scene].description.append(line)
@@ -112,12 +95,12 @@ class Parser:
 
     def parse_choices(self, line):
         line = line.strip() # normalized line
-        if line == "choice:":  # Skip to next line
+        if line == "choice:" or line == "":  # Skip to next line
             return None
-        if line[:3] in ("---", "==="):
+        if line[:3] in SCENE_SEPARATORS:
             self.state = State.SCENE
             return None
-        if self.normalize(line) == "scene:":
+        if self.normalize(line)[:7] == "scene:":
             self.state = State.TAG
             return None
         if line[0] != "-":
@@ -133,6 +116,7 @@ class Parser:
         self.state = State.FRONTMATTER
         story = Story("Untitled", "Anonymous")  # Create with default title and author
         current_scene = None
+        choice_count = 0
         with open(story_file) as sf:
             for line in sf:
                 if self.state == State.FRONTMATTER:
@@ -146,7 +130,7 @@ class Parser:
                     if result:
                         choice_count += 1
                         prompt, next_scene = result
-                        story.scenes[current_scene].choices = Choice(prompt, next_scene)
+                        story.scenes[current_scene].choices.append(Choice(prompt, next_scene))
                     # If result is None, state was changed to one of these
                     #   State.TAG: parser will move to the statement below
                     #   State.SCENE: continue to the next line of text
@@ -156,4 +140,4 @@ class Parser:
                     if current_scene is None:   # First scene in the file is the starting scene
                         current_scene = scene_tag
                     choice_count = 0    # Sets choice count for new scene to zero for later states
-        return story, scene_tag
+        return story, current_scene

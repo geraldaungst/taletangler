@@ -34,7 +34,9 @@ def main():
         parser_mode = "Normal"
     story_parser = Parser(parser_mode)
     story, cur_scene = story_parser.process_story(args.story_file)
+    print(story)
 
+"""All code below is future functionality. Currently in pseudocode.
 
     # Present story introduction and instructions
     present_reader_instructions()
@@ -49,6 +51,7 @@ def main():
         if cur_scene == "theend":
             break
     handle_story_ending()
+"""
 
 if __name__ == "__main__":
     main()
