@@ -6,7 +6,8 @@ Description: Text file parser for TaleTangler
 """
 import re
 import errors
-from story_models import Choice
+from story_models import Story, Scene, Choice
+from enum import Enum, auto
 
 
 class State(Enum):
@@ -22,7 +23,7 @@ class Mode(Enum):
     VERBOSE = auto()
 
 
-class Parser():
+class Parser:
     def __init__(self, mode):
         self.state = State.FRONTMATTER
         self.mode = mode
@@ -39,9 +40,9 @@ class Parser():
         # In this state, all text other than "title:" and "author:" lines is ignored
         norm_line = self.normalize(line)
         if norm_line[:6] == "title:":
-            story.title = strip(line[6:])
+            story.title = line[6:].strip()
         elif norm_line[:7] == "author:":
-            story.title =author
+            story.author = line[7:].strip()
         elif norm_line[:6] == "scene:":
             self.state = State.TAG
         elif norm_line[:3] in ("---", "==="):
@@ -65,6 +66,7 @@ class Parser():
         # This state is a single line that handles the scene: tag and updates the parser's active scene
         norm_line = self.normalize(line) # normalized line
         scene = None
+        scene_tag = None
         if norm_line[:6] == "scene:":   # confirming we are in the right state
             scene_tag = norm_line[6:]
             if scene_tag:
@@ -73,23 +75,25 @@ class Parser():
                 self.state = State.DESCRIPTION  # This state is always a single line
             else:
                 raise errors.FileFormatError(errors.ErrText.NO_SCENE_TAG)
-        return scene
+        return scene_tag, scene
 
 
-    def parse_description(self, line):
+    def parse_description(self, story, line):
         # In this state, all text is collected verbatim. The assumption is this part is written as the
         # author intended
         norm_line = self.normalize(line) # normalized line
         if norm_line == "choices:":
             self.state = State.CHOICES
+        elif norm_line == "scene:" or norm_line[:3] in ("---", "==="):
+            raise errors.FileFormatError(errors.ErrText.NO_CHOICES)
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
-            self.scenes[self.active_scene].description.append(line)
+            story.scenes[self.active_scene].description.append(line)
         else:
             raise errors.FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
 
 
     def parse_choices(self, line):
-        line = strip(line) # normalized line
+        line = line.strip() # normalized line
         if line == "choice:":  # Skip to next line
             return None
         if line[:3] in ("---", "==="):
@@ -107,9 +111,10 @@ class Parser():
         return prompt, next_scene.strip()
 
 
-    def process_story(story_file):
+    def process_story(self, story_file):
         self.state = State.FRONTMATTER
         story = Story("Untitled", "Anonymous")  # Create with default title and author
+        current_scene = None
         with open(story_file) as sf:
             for line in sf:
                 if self.state == State.FRONTMATTER:
@@ -119,17 +124,18 @@ class Parser():
                 if self.state == State.DESCRIPTION:
                     self.parse_description(story, line)
                 if self.state == State.CHOICES:
-                    result = self.parse_choices(story, line, choice_count)
+                    result = self.parse_choices(line)
                     if result:
                         choice_count += 1
                         prompt, next_scene = result
-                        story.choices[choice_count] = Choice(prompt, next_scene)
+                        story.scenes[current_scene].choices = Choice(prompt, next_scene)
                     # If result is None, state was changed to one of these
                     #   State.TAG: parser will move to the statement below
                     #   State.SCENE: continue to the next line of text
                 if self.state == State.TAG:
-                    scene = self.parse_tagline(line)
+                    scene_tag, scene = self.parse_tagline(line)
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
+                    if current_scene is None:   # First scene in the file is the starting scene
+                        current_scene = scene_tag
                     choice_count = 0    # Sets choice count for new scene to zero for later states
-
-        return story
+        return story, scene_tag
