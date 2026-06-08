@@ -8,13 +8,17 @@ lightly-formatted text files and presents them to the user as interactive storie
 Usage: taletangler.py [storyfile.txt]
 """
 import argparse
+import os
 from story_parser import Parser
 from errors import story_exists
 
 
 def present_reader_instructions():
     # TODO: Will eventually display more thorough instructions for the reader
-    print("To navigate this story, when you are presented with choices, type the number of the choice.\n\n---\n\n")
+    os.system('clear')
+    print("Welcome to TaleTangler")
+    print("======================")
+    print("\n\nTo navigate this story, when you are presented with choices, type the number of the choice.\n\n---\n\n")
 
 
 def handle_story_ending():
@@ -38,7 +42,8 @@ def main():
 
     # Present story introduction and instructions
     present_reader_instructions()
-    print(f"\n{story.title}\n\nby {story.author}\n\n")
+    print(f"{story.title.center(72)}\n")
+    print(f"by {story.author}".center(72))
     if story.instructions:
         pass    # This will be written later
     # Main game loop pseudocode

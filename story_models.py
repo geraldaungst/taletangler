@@ -23,10 +23,15 @@ class Story:
         for line in self.scenes[cur_scene].description:
             print(line)
         for option, choice in enumerate(self.scenes[cur_scene].choices, start=1):
-            print(f"{option}: {choice.prompt}")
+            if choice.next_scene == "theend":
+                print(f"{choice.prompt}")
+            else:
+                print(f"{option}: {choice.prompt}")
         print("\n")
 
     def get_reader_choice(self, cur_scene):
+        if self.scenes[cur_scene].choices[0].next_scene == "theend":
+            return "theend"
         while True:
             try:
                 choice = int(input("What do you do? "))
