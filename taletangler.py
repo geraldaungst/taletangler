@@ -15,7 +15,7 @@ from errors import story_exists
 
 def present_reader_instructions():
     # TODO: Will eventually display more thorough instructions for the reader
-    os.system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("Welcome to TaleTangler")
     print("======================")
     print("\n\nTo navigate this story, when you are presented with choices, type the number of the choice.\n\n---\n\n")
