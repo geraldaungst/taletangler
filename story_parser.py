@@ -9,15 +9,6 @@ import errors
 from story_models import Story, Scene, Choice
 from enum import Enum, auto
 
-# TODO: Debugging session needed — two known issues from first test run
-#   1. All choices are attaching to the first scene instead of their respective scenes.
-#      Suspected cause: current_scene not updating correctly when a new scene is encountered.
-#      Check process_story logic around State.TAG handling and current_scene assignment.
-#   2. Last two scenes in the file appear as raw unparsed text.
-#      Parser appears to stop processing at some point and treat remaining lines as description.
-#      Step through with PyCharm debugger, watching self.state and current_scene on each line.
-#   Plan: Use PyCharm debugger to step through spec_example.txt and monitor state transitions.
-
 SCENE_SEPARATORS = ["---", "===", "***"]
 
 class State(Enum):
@@ -92,12 +83,12 @@ class Parser:
         # In this state, all text is collected verbatim. The assumption is this part is written as the
         # author intended
         norm_line = self.normalize(line) # normalized line
-        if norm_line == "choices:":
+        if norm_line in ["choices:", "theend"]:
             self.state = State.CHOICES
         elif norm_line == "scene:" or norm_line[:3] in SCENE_SEPARATORS:
             raise errors.FileFormatError(errors.ErrText.NO_CHOICES)
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
-            story.scenes[self.active_scene].description.append(line)
+            story.scenes[self.active_scene].description.append(line.strip())
         else:
             raise errors.FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
 
@@ -121,13 +112,14 @@ class Parser:
         if extra or not next_scene:     # Choice line must have exactly one "->"
             raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
         prompt = prompt.strip("-").strip()
-        return prompt, next_scene.strip()
+        next_scene = self.normalize(next_scene)
+        return prompt, next_scene
 
 
     def process_story(self, story_file):
         self.state = State.FRONTMATTER
         story = Story("Untitled", "Anonymous")  # Create with default title and author
-        current_scene = None
+        starting_scene = None
         choice_count = 0
         with open(story_file) as sf:
             for line in sf:
@@ -142,14 +134,14 @@ class Parser:
                     if result:
                         choice_count += 1
                         prompt, next_scene = result
-                        story.scenes[current_scene].choices.append(Choice(prompt, next_scene))
+                        story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene))
                     # If result is None, state was changed to one of these
                     #   State.TAG: parser will move to the statement below
                     #   State.SCENE: continue to the next line of text
                 if self.state == State.TAG:
                     scene_tag, scene = self.parse_tagline(line)
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
-                    if current_scene is None:   # First scene in the file is the starting scene
-                        current_scene = scene_tag
+                    if starting_scene is None:   # First scene in the file is the starting scene
+                        starting_scene = scene_tag
                     choice_count = 0    # Sets choice count for new scene to zero for later states
-        return story, current_scene
+        return story, starting_scene

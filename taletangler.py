@@ -13,13 +13,14 @@ from errors import story_exists
 
 
 def present_reader_instructions():
-    # TODO: Will eventually display instructions for the reader
-    pass
+    # TODO: Will eventually display more thorough instructions for the reader
+    print("To navigate this story, when you are presented with choices, type the number of the choice.\n\n---\n\n")
 
 
 def handle_story_ending():
-    # TODO: Will eventually display any closing instructions or text
-    pass
+    # TODO: May eventually display more thorough closing instructions or text
+    input("\n\n---\n\nPress the Enter or Return key to exit.\n")
+    print("\n\nThank you for reading!\n")
 
 
 def main():
@@ -34,24 +35,19 @@ def main():
         parser_mode = "Normal"
     story_parser = Parser(parser_mode)
     story, cur_scene = story_parser.process_story(args.story_file)
-    print(story)
-
-"""All code below is future functionality. Currently in pseudocode.
 
     # Present story introduction and instructions
     present_reader_instructions()
-    print(story.title)
+    print(f"\n{story.title}\n\nby {story.author}\n\n)
     if story.instructions:
         pass    # This will be written later
     # Main game loop pseudocode
     while True:
         story.display_scene(cur_scene)
-        reader_choice = story.get_reader_choice(cur_scene)
-        cur_scene = story.handle_choice(cur_scene, reader_choice)
+        cur_scene = story.get_reader_choice(cur_scene)
         if cur_scene == "theend":
             break
     handle_story_ending()
-"""
 
 if __name__ == "__main__":
     main()

@@ -19,13 +19,28 @@ class Story:
         return "\n".join(story_strings)
 
     def display_scene(self, cur_scene):
-        pass
+        print("---")
+        for line in self.scenes[cur_scene].description:
+            print(line)
+        for option, choice in enumerate(self.scenes[cur_scene].choices, start=1):
+            print(f"{option}: {choice.prompt}")
+        print("\n")
 
     def get_reader_choice(self, cur_scene):
-        pass
+        while True:
+            try:
+                choice = int(input("What do you do? "))
+            except ValueError:
+                print("Please enter the number of your choice.")
+                continue
+            if choice < 1 or choice > len(self.scenes[cur_scene].choices):
+                print("That is not one of the choices.")
+                continue
+            break
+        # Reader-facing numbers start at 1; list index starts at 0
+        choice = choice - 1
+        return self.scenes[cur_scene].choices[choice].next_scene
 
-    def handle_choice(self, cur_scene, reader_choice):
-        pass
 
 
 class Scene:
@@ -34,7 +49,7 @@ class Scene:
         self.choices = choices
 
     def __repr__(self):
-        scene_strings = ["\n".join(self.description)]
+        scene_strings = ["**SCENE START**", "\n".join(self.description)]
         for choice_num, choice in enumerate(self.choices, start=1):
             scene_strings.append(f"{choice_num}: {choice}")
         return "\n".join(scene_strings)
