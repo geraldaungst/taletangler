@@ -1,5 +1,5 @@
 title: The Lighthouse Keeper's Secret
-author: TaleTangler Test Suite
+author: Brindlewick Wobblequill
 
 scene: Start
 
