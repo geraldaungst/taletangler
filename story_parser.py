@@ -46,7 +46,7 @@ class Parser:
             story.author = line[7:].strip()
         elif norm_line[:6] == "scene:":
             self.state = State.TAG
-        elif norm_line[:3] in SCENE_SEPARATORS:
+        elif line.strip()[:3] in SCENE_SEPARATORS:
             self.state = State.SCENE
         elif norm_line == "choices:":
             self.state = State.CHOICES
@@ -85,7 +85,7 @@ class Parser:
         norm_line = self.normalize(line) # normalized line
         if norm_line in ["choices:", "theend"]:
             self.state = State.CHOICES
-        elif norm_line == "scene:" or norm_line[:3] in SCENE_SEPARATORS:
+        elif norm_line == "scene:" or line.strip()[:3] in SCENE_SEPARATORS:
             raise errors.FileFormatError(errors.ErrText.NO_CHOICES)
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
             story.scenes[self.active_scene].description.append(line.strip())

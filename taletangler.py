@@ -38,7 +38,7 @@ def main():
 
     # Present story introduction and instructions
     present_reader_instructions()
-    print(f"\n{story.title}\n\nby {story.author}\n\n)
+    print(f"\n{story.title}\n\nby {story.author}\n\n")
     if story.instructions:
         pass    # This will be written later
     # Main game loop pseudocode

@@ -42,7 +42,6 @@ class Story:
         return self.scenes[cur_scene].choices[choice].next_scene
 
 
-
 class Scene:
     def __init__(self, description, choices):
         self.description = description
