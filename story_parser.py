@@ -3,6 +3,10 @@
 story_parser.py
 
 Description: Text file parser for TaleTangler
+
+Usage: python3 ttale_validator.py <story_file.ttale> [-v --verbose -w --writer]
+
+Note that --verbose and --writer are synonyms
 """
 import re
 import errors
@@ -24,21 +28,37 @@ class Mode(Enum):
     VERBOSE = auto()
 
 
-class Parser:
-    def __init__(self, mode):
+def looks_like_choice(line: str) -> bool:
+    test_line = line.strip()
+    return bool(test_line and test_line.startswith("-") and "->" in test_line)
+
+
+class StoryParser:
+    def __init__(self, mode: str):
         self.state = State.FRONTMATTER
         self.mode = mode
         self.notes = []
         self.errors = []
         self.active_scene = None
+        self.untagged_scene_count = 0
 
     @staticmethod
-    def normalize(text):
+    def normalize(text: str) -> str:
         normalized_text = re.sub(r'[^a-z0-9:]', '', text.lower())
         return normalized_text
 
-    def parse_frontmatter(self, story, line):
+    def parse_frontmatter(self, story: Story, line: str) -> None:
         # In this state, all text other than "title:" and "author:" lines is ignored
+        # TODO: Future versions may add other frontmatter that gets captured instead of being ignored.
+        #   Possibilities include:
+        #   - Subtitle
+        #   - Tagline
+        #   - Copyright
+        #   - Date written
+        #   - Version
+        #   - Preface
+        #   - Instructions
+        #   - Teacher, Course, Assignment details
         norm_line = self.normalize(line)
         if norm_line[:6] == "title:":
             story.title = line[6:].strip()
@@ -51,7 +71,7 @@ class Parser:
         elif norm_line == "choices:":
             self.state = State.CHOICES
 
-    def parse_scene(self, line):
+    def parse_scene(self, line: str) -> None:
         # In this state, blank lines are discarded until a "scene:" tag is reached
         # Other text in this state is flagged for the author
         norm_line = self.normalize(line) # normalized line
@@ -63,7 +83,7 @@ class Parser:
             # TODO: Consider adding code to note-printing function to eliminate consecutive duplicates?
             self.notes.append(errors.ErrText.UNEXPECTED_FRONTMATTER)
 
-    def parse_tagline(self, line):
+    def parse_tagline(self, line: str) -> tuple[str | None, Scene | None]:
         # This state is a single line that handles the scene: tag and updates the parser's active scene
         norm_line = self.normalize(line) # normalized line
         scene = None
@@ -75,15 +95,16 @@ class Parser:
                 self.active_scene = scene_tag
                 self.state = State.DESCRIPTION  # This state is always a single line
             else:
+                self.untagged_scene_count += 1
                 raise errors.FileFormatError(errors.ErrText.NO_SCENE_TAG)
         return scene_tag, scene
 
 
-    def parse_description(self, story, line):
+    def parse_description(self, story: Story, line: str) -> None:
         # In this state, all text is collected verbatim. The assumption is this part is written as the
         # author intended
         norm_line = self.normalize(line) # normalized line
-        if norm_line in ["choices:", "theend"]:
+        if norm_line in ["choices:", "theend"] or looks_like_choice(line):
             self.state = State.CHOICES
         elif norm_line == "scene:" or line.strip()[:3] in SCENE_SEPARATORS:
             raise errors.FileFormatError(errors.ErrText.NO_CHOICES)
@@ -93,7 +114,7 @@ class Parser:
             raise errors.FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
 
 
-    def parse_choices(self, line):
+    def parse_choices(self, line: str) -> tuple[str, str] | None:
         line = line.strip() # normalized line
         if self.normalize(line) == "choices:" or line == "":  # Skip to next line
             return None
@@ -116,7 +137,7 @@ class Parser:
         return prompt, next_scene
 
 
-    def process_story(self, story_file):
+    def process_story(self, story_file: str) -> tuple[Story, str | None]:
         self.state = State.FRONTMATTER
         story = Story("Untitled", "Anonymous")  # Create with default title and author
         starting_scene = None

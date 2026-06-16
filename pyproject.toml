@@ -1,0 +1,14 @@
+[tool.basedpyright]
+pythonPath = "/opt/homebrew/Caskroom/miniconda/base/envs/taletangler/bin/python"
+typeCheckingMode = "basic"
+
+# 🟢 ENABLE: Keep these true to build your function-typing habits
+reportMissingParameterType = true      # Warns if a function argument lacks a hint
+reportMissingReturnType = true         # Warns if a function is missing its -> return hint
+
+# 🔴 DISABLE: Keep these false to block the beginner-unfriendly noise
+reportUnknownVariableType = false      # Stops complaining about variables inside functions
+reportUnknownArgumentType = false      # Stops complaining about untyped external code
+reportUnknownMemberType = false        # Stops complaining about untyped external modules
+reportUnusedCallResult = false         # Stops demanding `_ = print()` style code
+reportAny = false                      # Allows the flexible 'Any' type without warnings
