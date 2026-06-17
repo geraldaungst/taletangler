@@ -5,7 +5,7 @@ story_models.py
 Description: The models and data structures used by TaleTangler
 """
 class Story:
-    def __init__(self, title, author):
+    def __init__(self, title: str, author: str):
         self.title = title
         self.author = author
         self.instructions = []
@@ -30,6 +30,7 @@ class Story:
         print("\n")
 
     def get_reader_choice(self, cur_scene):
+        choice = 0
         if self.scenes[cur_scene].choices[0].next_scene == "theend":
             return "theend"
         while True:
@@ -47,8 +48,17 @@ class Story:
         return self.scenes[cur_scene].choices[choice].next_scene
 
 
+class Choice:
+    def __init__(self, prompt: str, scene_tag: str):
+        self.prompt = prompt
+        self.next_scene = scene_tag
+
+    def __repr__(self):
+        return self.prompt + " -> " + self.next_scene
+
+
 class Scene:
-    def __init__(self, description, choices):
+    def __init__(self, description: list[str], choices: list[Choice]):
         self.description = description
         self.choices = choices
 
@@ -57,11 +67,3 @@ class Scene:
         for choice_num, choice in enumerate(self.choices, start=1):
             scene_strings.append(f"{choice_num}: {choice}")
         return "\n".join(scene_strings)
-
-class Choice:
-    def __init__(self, prompt, scene_tag):
-        self.prompt = prompt
-        self.next_scene = scene_tag
-
-    def __repr__(self):
-        return self.prompt + " -> " + self.next_scene

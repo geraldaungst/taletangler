@@ -36,12 +36,13 @@ def looks_like_choice(line: str) -> bool:
 
 
 class StoryParser:
-    def __init__(self, mode: str):
+    def __init__(self, mode: Mode):
         self.state = State.FRONTMATTER
         self.mode = mode
         self.notes = []
         self.errors = []
         self.active_scene = None
+        self.active_choices_section = False
         self.cur_line = 0
         self.untagged_scene_count = 0
     
@@ -130,7 +131,8 @@ class StoryParser:
         # In this state, all text is collected verbatim. The assumption is this part is written as the
         # author intended
         norm_line = self.normalize(line) # normalized line
-        if norm_line in ["choices:", "theend"] or looks_like_choice(line):
+        # The slice below ensures that a line with unexpected text after "choices:" is not ignored
+        if norm_line in ["choices:", "theend"]:
             self.state = State.CHOICES
         elif norm_line == "scene:":
             self._handle_error(errors.ErrText.NO_CHOICES)
@@ -139,6 +141,26 @@ class StoryParser:
             self._handle_error(errors.ErrText.NO_CHOICES)
             self.state = State.SCENE
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
+            if norm_line[:8] == "choices:":
+                if looks_like_choice(line[8:].strip()):
+                    self.state = State.CHOICES
+                    return  # Prevents adding this line to the description
+                else:
+                    self.notes.append(errors.TTError(
+                        errors.ErrText.INLINE_CHOICE_INVALID.code,
+                        self.active_scene,
+                        self.cur_line,
+                        errors.ErrText.INLINE_CHOICE_INVALID.value
+                    ))
+            elif looks_like_choice(line):
+                self.notes.append(
+                    errors.TTError(
+                        errors.ErrText.APPEARS_LIKE_CHOICE.code,
+                        self.active_scene,
+                        self.cur_line,
+                        errors.ErrText.APPEARS_LIKE_CHOICE.value,
+                    )
+                )
             story.scenes[self.active_scene].description.append(line.strip())
         else:
             self._handle_error(errors.ErrText.NO_ACTIVE_SCENE)
@@ -146,26 +168,38 @@ class StoryParser:
 
     def parse_choices(self, line: str) -> tuple[str, str] | None:
         line = line.strip() # normalized line
-        if self.normalize(line) == "choices:" or line == "":  # Skip to next line
+        if line == "":  # Skip blank lines
             return None
+        if self.normalize(line)[:8] == "choices:":  # Skip to next line
+            if self.active_choices_section: # there is already a choices section in this scene
+                return "Duplicate choices section", "duplicate-choices"
+            self.active_choices_section = True
+            if line[8:]:    # Unexpected text after "choices:" will be processed as a choice
+                self._handle_error(errors.ErrText.INLINE_CHOICE_ADDED)
+                # The remaining text on this line will fall through to the rest of the parser
+                line = line[8:].strip()
+            else:   # "choices:" was by itself on the line and can be skipped
+                return None
         if line[:3] in SCENE_SEPARATORS:
+            self.active_choices_section = False
             self.state = State.SCENE
             return None
-        if self.normalize(line)[:7] == "scene:":
+        if self.normalize(line)[:6] == "scene:":
+            self.active_choices_section = False
             self.state = State.TAG
             return None
         if self.normalize(line) == "theend":
+            self.active_choices_section = False
             return line, "theend"
-        if line[0] != "-":
+        if not looks_like_choice(line):
             self._handle_error(errors.ErrText.MALFORMED_CHOICE)
             return None
         prompt, next_scene, *extra = line.split("->")
+        next_scene = self.normalize(next_scene)
         if extra or not next_scene:     # Choice line must have exactly one "->"
             self._handle_error(errors.ErrText.MALFORMED_CHOICE)
             # Instead of assuming which scene tag is intended when more than one exists, assign "no-destination" instead
             next_scene = "no-destination"
-        else:
-            next_scene = self.normalize(next_scene)
         prompt = prompt.strip("-").strip()
         return prompt, next_scene
 
@@ -186,7 +220,15 @@ class StoryParser:
                     self.parse_description(story, line)
                 if self.state == State.CHOICES:
                     result = self.parse_choices(line)
-                    if result:
+                    if result and "duplicate-choices" in result:   # Note the duplicate choices section and proceed
+                        self.notes.append(errors.TTError(
+                            errors.ErrText.DUPLICATE_CHOICES_SECTION.code,
+                            self.active_scene,
+                            self.cur_line,
+                            errors.ErrText.DUPLICATE_CHOICES_SECTION.value,
+                            choice_count
+                        ))
+                    elif result:    # If result is anything but the duplicate choices error
                         choice_count += 1
                         prompt, next_scene = result
                         story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene))
