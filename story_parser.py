@@ -24,8 +24,10 @@ class State(Enum):
 
 
 class Mode(Enum):
-    STORY = auto()
+    NORMAL = auto()
     VERBOSE = auto()
+    VALIDATE = auto()
+    WRITER = auto()
 
 
 def looks_like_choice(line: str) -> bool:
@@ -40,7 +42,26 @@ class StoryParser:
         self.notes = []
         self.errors = []
         self.active_scene = None
+        self.cur_line = 0
         self.untagged_scene_count = 0
+    
+    def _handle_error(self, this_error: errors.ErrText) -> None:
+        if self.mode == Mode.NORMAL:
+            raise errors.FileFormatError(this_error.code)
+        elif self.mode == Mode.VERBOSE:
+            print(this_error.value)
+            raise errors.FileFormatError(this_error.code)
+        elif self.mode in (Mode.VALIDATE, Mode.WRITER):
+            self.errors.append(
+                errors.TTError(
+                    this_error.code,
+                    self.active_scene,
+                    self.cur_line,
+                    this_error.value,
+                )
+            )
+        else:  # There is a problem--unrecognized parser mode.
+            raise ValueError(f"Unrecognized parser mode: {self.mode}")
 
     @staticmethod
     def normalize(text: str) -> str:
@@ -79,9 +100,13 @@ class StoryParser:
             self.state = State.TAG
         elif len(norm_line) > 0:
             # For now, multiple unexpected lines will result in multiple identical notes
-            # This may be cleaned up in later versions of the code
-            # TODO: Consider adding code to note-printing function to eliminate consecutive duplicates?
-            self.notes.append(errors.ErrText.UNEXPECTED_FRONTMATTER)
+            # Each line will be collected as a separate note for completeness, but reporting can be condensed
+            self.notes.append(errors.TTError(
+                errors.ErrText.UNEXPECTED_FRONTMATTER.code,
+                self.active_scene,
+                self.cur_line,
+                errors.ErrText.UNEXPECTED_FRONTMATTER.value
+            ))
 
     def parse_tagline(self, line: str) -> tuple[str | None, Scene | None]:
         # This state is a single line that handles the scene: tag and updates the parser's active scene
@@ -90,13 +115,14 @@ class StoryParser:
         scene_tag = None
         if norm_line[:6] == "scene:":   # confirming we are in the right state
             scene_tag = norm_line[6:]
-            if scene_tag:
-                scene = Scene([], [])   # Create a new scene object with empty description and choices
-                self.active_scene = scene_tag
-                self.state = State.DESCRIPTION  # This state is always a single line
-            else:
+            scene = Scene([], [])  # Create a new scene object with empty description and choices
+            if not scene_tag:
                 self.untagged_scene_count += 1
-                raise errors.FileFormatError(errors.ErrText.NO_SCENE_TAG)
+                scene_tag = f"untagged-{self.untagged_scene_count:02d}"
+                self._handle_error(errors.ErrText.NO_SCENE_TAG)
+            self.active_scene = scene_tag
+            self.state = State.DESCRIPTION  # This state is always a single line
+
         return scene_tag, scene
 
 
@@ -106,12 +132,16 @@ class StoryParser:
         norm_line = self.normalize(line) # normalized line
         if norm_line in ["choices:", "theend"] or looks_like_choice(line):
             self.state = State.CHOICES
-        elif norm_line == "scene:" or line.strip()[:3] in SCENE_SEPARATORS:
-            raise errors.FileFormatError(errors.ErrText.NO_CHOICES)
+        elif norm_line == "scene:":
+            self._handle_error(errors.ErrText.NO_CHOICES)
+            self.state = State.TAG
+        elif line.strip()[:3] in SCENE_SEPARATORS:
+            self._handle_error(errors.ErrText.NO_CHOICES)
+            self.state = State.SCENE
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
             story.scenes[self.active_scene].description.append(line.strip())
         else:
-            raise errors.FileFormatError(errors.ErrText.NO_ACTIVE_SCENE)
+            self._handle_error(errors.ErrText.NO_ACTIVE_SCENE)
 
 
     def parse_choices(self, line: str) -> tuple[str, str] | None:
@@ -127,13 +157,16 @@ class StoryParser:
         if self.normalize(line) == "theend":
             return line, "theend"
         if line[0] != "-":
-            print(f"ERROR in line: {line}")
-            raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
+            self._handle_error(errors.ErrText.MALFORMED_CHOICE)
+            return None
         prompt, next_scene, *extra = line.split("->")
         if extra or not next_scene:     # Choice line must have exactly one "->"
-            raise errors.FileFormatError(errors.ErrText.MALFORMED_CHOICE)
+            self._handle_error(errors.ErrText.MALFORMED_CHOICE)
+            # Instead of assuming which scene tag is intended when more than one exists, assign "no-destination" instead
+            next_scene = "no-destination"
+        else:
+            next_scene = self.normalize(next_scene)
         prompt = prompt.strip("-").strip()
-        next_scene = self.normalize(next_scene)
         return prompt, next_scene
 
 
@@ -144,6 +177,7 @@ class StoryParser:
         choice_count = 0
         with open(story_file) as sf:
             for line in sf:
+                self.cur_line += 1
                 if self.state == State.FRONTMATTER:
                     self.parse_frontmatter(story, line)
                 if self.state == State.SCENE:
