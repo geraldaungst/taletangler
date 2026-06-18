@@ -58,16 +58,16 @@ def report_file_errors(error_list: list[TTError], verbose_mode: bool) -> None:
         for error in errors:
             if error.scene != scene_group:
                 scene_group = error.scene
-                print(f"\nErrors in scene {type_group}:")
+                print(f"\nErrors in scene {scene_group}:")
             print(f"    Line {error.line}: {error.text}")
     else:
         error_counter = Counter(error.type for error in errors)
         print(f"Total errors found: {len(errors)}")
+        scene_counter = Counter(error.scene for error in errors)
         print(f"Number of scenes with errors: {len(scene_counter)}")
         print("Number of errors by type:")
         for error_type, count in error_counter.items():
             print(f"    {error_type}: {count} errors")
-        scene_counter = Counter(error.scene for error in errors)
         print("Run with --writer to see individual error details.")
 
 def report_story_notes(note_list: list[TTError], verbose_mode: bool) -> None:
@@ -77,17 +77,17 @@ def report_story_notes(note_list: list[TTError], verbose_mode: bool) -> None:
     notes = sorted(note_list, key=lambda e: e.scene)
     if verbose_mode:
         scene_group = ""
-        for error in errors:
-            if error.scene != scene_group:
-                scene_group = error.scene
+        for note in notes:
+            if note.scene != scene_group:
+                scene_group = note.scene
                 print(f"\nNotes for scene {scene_group}:")
-            print(f"    Line {error.line}", end="")
-            if error.duplicate_choice_boundary is not None:
+            print(f"    Line {note.line}", end="")
+            if note.duplicate_choice_boundary is not None:
                 print(
-                    f", (extra choices begin at line {error.duplicate_choice_boundary})",
+                    f", (extra choices begin at line {note.duplicate_choice_boundary})",
                     end="",
                 )
-            print(f": {error.text} ")
+            print(f": {note.text} ")
     else:
         note_counter = Counter(note.type for note in notes)
         print(f"Total notes: {len(notes)}")
