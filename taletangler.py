@@ -37,11 +37,11 @@ def main():
     args = arg_parser.parse_args()
     if args.debug:
         # Debug mode also includes all Verbose options, so -v is ignored if -d is also active
-        parser_mode = "Debug"
+        parser_mode = Mode.DEBUG
     elif args.verbose:
-        parser_mode = "Verbose"
+        parser_mode = Mode.VERBOSE
     else:
-        parser_mode = "Normal"
+        parser_mode = Mode.NORMAL
     story_parser = StoryParser(parser_mode)
     story, cur_scene = story_parser.process_story(args.story_file)
 

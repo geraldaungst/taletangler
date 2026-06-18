@@ -166,13 +166,20 @@ class StoryParser:
             self._handle_error(errors.ErrText.NO_ACTIVE_SCENE)
 
 
-    def parse_choices(self, line: str) -> tuple[str, str] | None:
+    def parse_choices(self, line: str, choice_count: int) -> tuple[str, str] | None:
         line = line.strip() # normalized line
         if line == "":  # Skip blank lines
             return None
         if self.normalize(line)[:8] == "choices:":  # Skip to next line
             if self.active_choices_section: # there is already a choices section in this scene
-                return "Duplicate choices section", "duplicate-choices"
+                self.notes.append(errors.TTError(
+                    errors.ErrText.DUPLICATE_CHOICES_SECTION.code,
+                    self.active_scene,
+                    self.cur_line,
+                    errors.ErrText.DUPLICATE_CHOICES_SECTION.value,
+                    choice_count
+                ))
+                return None
             self.active_choices_section = True
             if line[8:]:    # Unexpected text after "choices:" will be processed as a choice
                 self._handle_error(errors.ErrText.INLINE_CHOICE_ADDED)
@@ -219,16 +226,8 @@ class StoryParser:
                 if self.state == State.DESCRIPTION:
                     self.parse_description(story, line)
                 if self.state == State.CHOICES:
-                    result = self.parse_choices(line)
-                    if result and "duplicate-choices" in result:   # Note the duplicate choices section and proceed
-                        self.notes.append(errors.TTError(
-                            errors.ErrText.DUPLICATE_CHOICES_SECTION.code,
-                            self.active_scene,
-                            self.cur_line,
-                            errors.ErrText.DUPLICATE_CHOICES_SECTION.value,
-                            choice_count
-                        ))
-                    elif result:    # If result is anything but the duplicate choices error
+                    result = self.parse_choices(line, choice_count)
+                    if result:    # If result is not None, it is a valid choice line
                         choice_count += 1
                         prompt, next_scene = result
                         story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene))

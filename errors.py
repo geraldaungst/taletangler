@@ -8,6 +8,8 @@ from enum import Enum
 import argparse
 from pathlib import Path
 from dataclasses import dataclass
+from story_parser import Mode
+from collections import Counter
 
 @dataclass
 class TTError:
@@ -16,7 +18,6 @@ class TTError:
     line: int
     text: str
     duplicate_choice_boundary: int | None = None
-
 
 
 class ErrText(Enum):
@@ -34,8 +35,10 @@ class ErrText(Enum):
     def code(self):
         return self.name.lower()
 
+
 class FileFormatError(ValueError):
     """Raised when a story file does not match the expected format."""
+
 
 def story_exists(arg):
     story_file = Path(arg).expanduser().resolve()
@@ -44,3 +47,52 @@ def story_exists(arg):
     elif story_file.suffix.lower() != ".txt":
         raise argparse.ArgumentTypeError("Incorrect story file type. Must be plain text.")
     return story_file
+
+
+def report_file_errors(error_list: list[TTError], mode: Mode) -> None:
+    print("Critical errors found in the story file:")
+    print("========================================")
+    print("Errors below will prevent the story from running. They are grouped by scene.")
+    errors = sorted(error_list, key=lambda e: e.scene)
+    if mode in (Mode.VERBOSE, Mode.WRITER):
+        scene_group = ""
+        for error in errors:
+            if error.scene != scene_group:
+                scene_group = error.scene
+                print(f"\nErrors in scene {type_group}:")
+            print(f"    Line {error.line}: {error.text}")
+    elif mode == Mode.VALIDATE:
+        error_counter = Counter(error.type for error in errors)
+        print(f"Total errors found: {len(errors)}")
+        print(f"Number of scenes with errors: {len(scene_counter)}")
+        print("Number of errors by type:")
+        for error_type, count in error_counter.items():
+            print(f"    {error_type}: {count} errors")
+        scene_counter = Counter(error.scene for error in errors)
+        print("Run with --writer to see individual error details.")
+
+def report_story_notes(note_list: list[TTError], mode: Mode) -> None:
+    print("Story file notes:")
+    print("=================")
+    print("Notes below are not critical errors, but will cause the story to not run as expected.")
+    notes = sorted(note_list, key=lambda e: e.scene)
+    if mode in (Mode.VERBOSE, Mode.WRITER):
+        scene_group = ""
+        for error in errors:
+            if error.scene != scene_group:
+                scene_group = error.scene
+                print(f"\nNotes for scene {scene_group}:")
+            print(f"    Line {error.line}", end="")
+            if error.duplicate_choice_boundary is not None:
+                print(
+                    f", (extra choices begin at line {error.duplicate_choice_boundary})",
+                    end="",
+                )
+            print(f": {error.text} ")
+    elif mode == Mode.VALIDATE:
+        note_counter = Counter(note.type for note in notes)
+        print(f"Total notes: {len(notes)}")
+        print("Number of errors by type:")
+        for note_type, count in note_counter.items():
+            print(f"{note_type}: {count} notes")
+        print("Run with --writer to see individual note details.")
