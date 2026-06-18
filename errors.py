@@ -47,51 +47,60 @@ def story_exists(arg):
         raise argparse.ArgumentTypeError("Incorrect story file type. Must be plain text.")
     return story_file
 
-
-def report_file_errors(error_list: list[TTError], verbose_mode: bool) -> None:
-    print("Critical errors found in the story file:")
-    print("========================================")
-    print("Errors below will prevent the story from running. They are grouped by scene.")
+def display_errors(error_list: list[TTError], error_type: str, verbose_mode: bool) -> None:
+    if error_type == "error":
+        header = (
+            "Critical errors found in the story file:\n"
+            "========================================\n"
+            "Errors below will prevent the story from running."
+        )
+        prefix = "Errors in scene"
+    elif error_type == "note":
+        header = (
+            "Story file notes:\n"
+            "=================\n"
+            "Notes below are not critical errors, but will cause the story to not run as expected."
+        )
+        prefix = "Notes for scene"
+    else:
+        print(f"Unknown error type '{error_type}'. Validation failed.")
+        return
+    
+    print(header)
     errors = sorted(error_list, key=lambda e: e.scene)
     if verbose_mode:
         scene_group = ""
         for error in errors:
             if error.scene != scene_group:
                 scene_group = error.scene
-                print(f"\nErrors in scene {scene_group}:")
-            print(f"    Line {error.line}: {error.text}")
-    else:
-        error_counter = Counter(error.type for error in errors)
-        print(f"Total errors found: {len(errors)}")
-        scene_counter = Counter(error.scene for error in errors)
-        print(f"Number of scenes with errors: {len(scene_counter)}")
-        print("Number of errors by type:")
-        for error_type, count in error_counter.items():
-            print(f"    {error_type}: {count} errors")
-        print("Run with --writer to see individual error details.")
-
-def report_story_notes(note_list: list[TTError], verbose_mode: bool) -> None:
-    print("Story file notes:")
-    print("=================")
-    print("Notes below are not critical errors, but will cause the story to not run as expected.")
-    notes = sorted(note_list, key=lambda e: e.scene)
-    if verbose_mode:
-        scene_group = ""
-        for note in notes:
-            if note.scene != scene_group:
-                scene_group = note.scene
-                print(f"\nNotes for scene {scene_group}:")
-            print(f"    Line {note.line}", end="")
-            if note.duplicate_choice_boundary is not None:
+                print(f"\n{prefix} {scene_group}:")
+            print(f"    Line {error.line}", end="")
+            if error.duplicate_choice_boundary is not None:
                 print(
-                    f", (extra choices begin at line {note.duplicate_choice_boundary})",
+                    f", (extra choices begin at line {error.duplicate_choice_boundary})",
                     end="",
                 )
-            print(f": {note.text} ")
+            print(f": {error.text} ")
     else:
-        note_counter = Counter(note.type for note in notes)
-        print(f"Total notes: {len(notes)}")
-        print("Number of errors by type:")
-        for note_type, count in note_counter.items():
-            print(f"{note_type}: {count} notes")
-        print("Run with --writer to see individual note details.")
+        error_counter = Counter(error.type for error in errors)
+        print(f"Total {error_type}s: {len(errors)}")
+        print(f"Number of {error_type}s by type:")
+        for error_type, count in error_counter.items():
+            print(f"{error_type}: {count} {error_type}s")
+        print("Run with --writer to see individual details.")
+
+
+def report_errors(error_list: list[TTError], note_list: list[TTError], verbose_mode: bool) -> None:
+    errors_exist = error_list != []
+    notes_exist = note_list != []
+    if not errors_exist and not notes_exist:
+        print("No errors or problems found in the story file.")
+        return
+    if errors_exist:
+        display_errors(error_list, "error", verbose_mode)
+        if notes_exist and not verbose_mode:
+            print("Additional non-critical notes also found.")
+            print("Fix critical errors first, or use --writer to see all details.")
+            return
+    if notes_exist:
+        display_errors(note_list, "note", verbose_mode)

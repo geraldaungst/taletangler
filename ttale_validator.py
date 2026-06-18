@@ -7,12 +7,12 @@ Description: A standalone script to validate a TaleTangler story file and report
 Usage: 
 """
 import argparse
-from errors import story_exists, report_file_errors, report_story_notes
+from errors import story_exists, report_errors
 from story_models import Story
 from story_parser import StoryParser, Mode
 
 
-def validate_story(story: Story, verbose_mode: bool) -> bool:
+def validate_story(story: Story, verbose_mode: bool):
     print("Story graph validation not yet implemented.")
     print("Report will include only story file errors.")
     return True     # Will eventually return False if any problems are found
@@ -34,19 +34,9 @@ def main():
         parser_mode = Mode.VALIDATE
     story_parser = StoryParser(parser_mode)
     story, cur_scene = story_parser.process_story(args.story_file)
-    if story_parser.errors:
-        report_file_errors(story_parser.errors, verbose_mode)
-        if story_parser.notes and parser_mode != "Writer":
-            print("Additional non-critical notes also found. Fix critical errors first, or use --writer to see all details.")
-    if story_parser.notes and parser_mode == "Writer":
-        report_story_notes(story_parser.notes, verbose_mode)
-    else:
-        print("No errors or problems found in the story file.")
-        if validate_story(story, verbose_mode):
-            print("Story may be playable.")
-        else:
-            print("Story is not playable.")
-
+    if not story_parser.errors:
+        validate_story(story, verbose_mode)
+    report_errors(story_parser.errors, story_parser.notes, verbose_mode)
 
 if __name__ == "__main__":
     main()
