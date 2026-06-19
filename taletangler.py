@@ -3,13 +3,13 @@
 taletangler.py
 
 Description: Build your own choose-your-own-adventure-style stories. The program reads
-lightly-formatted text files and presents them to the user as interactive stories.
+lightly formatted text files and presents them to the user as interactive stories.
 
 Usage: taletangler.py [storyfile.txt]
 """
 import argparse
 import os
-from story_parser import StoryParser
+from story_parser import StoryParser, Mode
 from errors import story_exists
 
 
@@ -35,10 +35,7 @@ def main():
     # TODO: Consider adding --debug mode for giving debugging output to developer
     # arg_parser.add_argument("-d", "--debug", action="store_true")
     args = arg_parser.parse_args()
-    if args.debug:
-        # Debug mode also includes all Verbose options, so -v is ignored if -d is also active
-        parser_mode = Mode.DEBUG
-    elif args.verbose:
+    if args.verbose:
         parser_mode = Mode.VERBOSE
     else:
         parser_mode = Mode.NORMAL

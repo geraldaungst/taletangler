@@ -18,7 +18,7 @@ class Story:
             story_strings.append(f"{self.scenes[scene]}")
         return "\n".join(story_strings)
 
-    def display_scene(self, cur_scene: str):
+    def display_scene(self, cur_scene: str | None):
         print("---")
         for line in self.scenes[cur_scene].description:
             print(line)
@@ -29,7 +29,7 @@ class Story:
                 print(f"{option}: {choice.prompt}")
         print("\n")
 
-    def get_reader_choice(self, cur_scene: str):
+    def get_reader_choice(self, cur_scene: str | None):
         choice = 0
         if self.scenes[cur_scene].choices[0].next_scene == "theend":
             return "theend"
