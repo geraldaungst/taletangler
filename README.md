@@ -6,7 +6,7 @@ TaleTangler reads lightly-formatted plain text story files and presents them as 
 ---
 
 ## Requirements
-- Python 3.x
+- Python 3.9 or later
 - Mac, Linux, or Windows
 
 No additional packages required.
