@@ -1,0 +1,1766 @@
+title: Recess At Last
+author: Gerald Aungst
+
+---
+
+scene: opening
+
+Mrs. McClintock stops right in the middle of explaining how to add fractions with unlike denominators. She looks around at twenty-four kids all sneaking peeks out the window at the recess yard, and she smiles. After what the weather lady on Channel 8 called the worst, wettest winter ever, she has to know it's a lost cause.
+
+"OK, we'll finish this tomorrow. Clear your desks and line up for recess."
+
+Yes! You've been waiting for this since you woke up. A sunny day and a brand new pair of sneakers, the white ones you're supposed to keep clean for your cousin's party Saturday. You wore them anyway. Nothing is going to ruin your recess today.
+
+Then Mrs. McClintock catches your eye. "Hold on there, Jamie. You too, Sam. You two never turned in your Explorer packets. You have to finish them before you can go out."
+
+Choices:
+- Sit back down at your desk and glance at Sam -> classroom
+
+---
+
+scene: classroom
+
+Two rows over, Sam is digging through his desk like the packet might be hiding under all his junk. It isn't. Sam almost never does his homework, but he always looks for it really hard.
+
+Mrs. McClintock sits at her desk, waiting. You need four things before you can go outside: a pencil, your finished packet, your backpack with your hat and mittens, and your coat. The pencil is the easy one. It's right there in your desk. The packet is the one that's really gone.
+
+Choices:
+- Get a pencil from your supply box, then deal with the closet -> supplybox
+- Go straight to Mr. Bradley's room, since the packet is the real problem -> packet_first
+- Ask Mrs. McClintock if she has a spare pencil -> ask_mcclintock
+
+---
+
+scene: supplybox
+
+The supply box is right there in your desk. Your mom got you the huge dorky one instead of the small cool one, but it still works. Pencil in hand in about ten seconds.
+
+Now the closet.
+
+Choices:
+- Head into the coat closet -> closet
+
+---
+
+scene: ask_mcclintock
+
+She looks up from her papers.
+
+"Don't you have one of your own, Jamie?"
+
+You start to explain. She holds up a hand and opens her desk drawer. Then she stops and sets a single pencil on the corner of her desk.
+
+"You can borrow this one," she says. "But you'll have to leave me something to hold onto until you bring it back." She looks down at your feet. "One of those nice new sneakers ought to do it."
+
+A shoe. For a pencil. And not just any shoe, the brand new ones you're saving for Saturday. There is no way that is happening today.
+
+"Never mind," you say. "I'll get my own."
+
+She almost smiles. "Your coat is probably in the lost-and-found, by the way. Mrs. Walker keeps everything down there."
+
+Choices:
+- Go back to your desk and dig out your supply box -> supplybox_after_asking
+
+---
+
+scene: supplybox_after_asking
+
+Your supply box is still in your desk, right where it always is. Pencil in hand in about ten seconds.
+
+Now the closet.
+
+Choices:
+- Head into the coat closet -> closet
+
+---
+
+scene: packet_first
+
+The pencil is right there in the supply box. Ten seconds, done. The coat and the backpack can wait. The packet is the real blocker, and it's all the way over in Mr. Bradley's room.
+
+Choices:
+- Head out into the hallway -> hallway_nobackpack
+
+---
+
+scene: closet
+
+Oh, this is a total disaster. Mrs. McClintock always tells everyone to hang up their coats and bags in the morning, but of course they just dump them in a heap on the floor. Everyone's stuff is tangled together. You can see the corner of your yellow backpack near the bottom. Somebody left a pair of muddy boots right in the middle of everything.
+
+Choices:
+- Work carefully around the boots -> closet_careful
+- Just dig in. You'll be careful enough -> closet_fast
+
+---
+
+scene: closet_careful
+
+You take your time. The backpack comes loose with the hat and the mittens still inside. Your sneakers stay perfectly white. You'll have to stop at the lost-and-found for your coat, though. You're pretty sure that's where it ended up.
+
+Choices:
+- Head out into the hallway -> hallway_clean
+
+---
+
+scene: closet_fast
+
+The backpack comes out fast. So does a streak of mud across your left sneaker, off the edge of one of those boots. Small. Brown. There's no pretending you didn't see it.
+
+You'll still have to stop at the lost-and-found for your coat.
+
+Choices:
+- Head out into the hallway -> hallway_scuffed
+
+---
+
+scene: badend_caught
+
+You make it about twenty feet before Mrs. Parker steps out of the side entrance with a coffee cup and a look of total surprise.
+
+The talk after that is short and very uncomfortable. You sit outside her office for what feels like three years. She isn't even mad, which is somehow worse. She just seems puzzled that you would do this when you were so close to being done.
+
+By the time you get back to Room 9 the whistle has blown. Mrs. McClintock looks at you, looks at the empty spot where your packet should be, and tells you to sit down and finish it after recess. She doesn't say it in a mean way. That almost makes it worse.
+
+You're at your desk, the sneakers still on your feet, while everyone else is outside.
+
+THE END
+
+---
+
+scene: badend_whistle
+
+She takes the packet just as the whistle blows outside. She looks at you with something that isn't quite sympathy and isn't quite an apology.
+
+"You can go out tomorrow, Jamie. The weather's supposed to be nice all week."
+
+You look down at your sneakers. Saturday is still coming. The party will be fine. It doesn't help as much as it should.
+
+THE END
+
+---
+
+scene: ending_brief_kickball_clean
+
+You make it into the game for two turns before the whistle blows. You didn't slide. The sneakers are fine. You're out of breath and grinning.
+
+It wasn't the recess you pictured this morning. But you were out there, and the sneakers are perfect for Saturday.
+
+THE END
+
+---
+
+scene: ending_brief_sunshine_clean
+
+You find a spot in the sun just as the whistle blows. Four minutes of warmth. The sneakers are spotless.
+
+It was enough. Barely, but enough. Saturday is going to be great.
+
+THE END
+
+---
+
+scene: door_rushing_clean
+
+The playground door. Sunshine. Kickball. Mud. The whistle could blow any minute. You have to pick fast.
+
+Choices:
+- Go for the kickball game -> ending_brief_kickball_clean
+- Stay on the blacktop -> ending_brief_sunshine_clean
+
+---
+
+scene: mcclintock_rushing_clean
+
+She takes the packet. Her eyes move down it fast. She nods.
+
+"Go ahead, Jamie. Hurry up."
+
+You're already moving.
+
+Choices:
+- Get to the door -> door_rushing_clean
+
+---
+
+scene: library_latecheck_toolate
+
+Miss Feeney checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and the longer walk back toward Room 9, and somewhere in there you already know what the clock is going to say.
+
+Choices:
+- Head back with the packet -> badend_whistle
+
+---
+
+scene: folder_clean_coat_unc_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> mcclintock_rushing_clean
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: folder_toolate
+
+The yellow folder. Your Explorer packet is right inside, finished, in your own handwriting. You did do this. You should feel good about it.
+
+Mostly you feel the clock. You grab the packet and head for the door.
+
+Choices:
+- Hurry back toward Room 9 -> badend_whistle
+
+---
+
+scene: room10_browse_toolate
+
+You know you shouldn't. You look anyway. A whistling frog on a seven-cent stamp from Bermuda, an index card your brother wrote about somebody named Brancusi. The stamps are wonderful and the minutes are gone, and that clock in the back of your head is pounding now.
+
+Choices:
+- Grab the folder and run -> folder_toolate
+
+---
+
+scene: room10_inside_clean_coat_unc_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_clean_coat_unc_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: ending_muddy_clean
+
+The mud got the sneaker. The kick was worth it. You knew that when you decided, and you'd decide the same way again.
+
+Saturday is going to be complicated. Right now it doesn't feel complicated at all.
+
+THE END
+
+---
+
+scene: kickball_ontime_clean
+
+Your friends see you coming and somebody waves you over. The mud is real and you know it. So is the game. First time up, your kick sails over the outfield. Second time up you go for first base without quite deciding to, and the mud sprays, and your left sneaker takes the whole thing.
+
+Choices:
+- Slide into first base anyway -> ending_muddy_clean
+
+---
+
+scene: ending_careful_clean
+
+The sneakers are perfect. Saturday is going to be great. You got twelve minutes of recess, and right now twelve minutes feels like everything.
+
+The sun is warm on your face and the blacktop smells like spring.
+
+THE END
+
+---
+
+scene: blacktop_ontime_clean
+
+Your friends wave you toward the field. You point at your sneakers and shake your head. Somebody laughs. Somebody shrugs. You find a spot in the sun and tip your face up into it.
+
+Choices:
+- Soak up the sun -> ending_careful_clean
+
+---
+
+scene: ending_doorway_clean
+
+You step out, and somewhere between the door and the blacktop it hits you: kickball isn't the whole thing. The sun is warm, your friends are right there, and your sneakers are perfect. Twelve minutes of this is plenty.
+
+Maybe tonight you'll sneak the sneakers back into the box. Nobody ever has to know.
+
+THE END
+
+---
+
+scene: doorway_ontime_clean
+
+You don't move right away. You just let it happen: the warmth through the glass, the voices, the smell of spring. Then somebody from your class spots you through the fence and yells your name.
+
+Choices:
+- Push the door open and step out into the sun -> ending_doorway_clean
+
+---
+
+scene: door_ontime_clean
+
+The playground door. Through the glass: sunshine, blacktop, your class playing kickball on the field beyond. The field is still muddy from last week's rain. Nobody has spotted you yet. You have time.
+
+Choices:
+- Run for the kickball game, even if the field ruins the sneakers -> kickball_ontime_clean
+- Stay on the blacktop and find your friends -> blacktop_ontime_clean
+- Just stand here a second -> doorway_ontime_clean
+
+---
+
+scene: mcclintock_ontime_clean
+
+She takes the packet and reads it over for a moment. Then she looks up.
+
+"You may go outside, Jamie."
+
+Eight words. The best eight words of the whole school year.
+
+Choices:
+- Get to the door -> door_ontime_clean
+
+---
+
+scene: library_latecheck_clean_coat_a
+
+Miss Feeney is still at the desk. She checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and then the walk back toward Room 9, and both of them feel a lot longer than they did the first time.
+
+Choices:
+- Head back with the packet -> mcclintock_rushing_clean
+
+---
+
+scene: folder_clean_coat_unc_a_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> mcclintock_ontime_clean
+- Go all the way back to the library to check -> library_latecheck_clean_coat_a
+
+---
+
+scene: folder_clean_coat_unc_b_browsed
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers. You've already burned a few minutes on the stamps, too.
+
+Choices:
+- Trust the work you already did -> mcclintock_rushing_clean
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_browse_clean_coat_unc_a
+
+You can't help it. Your brother has an index card about a sculptor named Constantin Brancusi pinned next to a stamp from Romania. There's a first-day cover with a whistling frog on it, a seven-cent stamp from Bermuda. You lose three whole minutes and you find every one of them worth it.
+
+Choices:
+- Okay, grab the folder -> folder_clean_coat_unc_b_browsed
+
+---
+
+scene: room10_inside_clean_coat_unc_a
+
+You're in the stamp room. It's the same size as your own classroom, but it doesn't feel anything like it. Mr. Bradley collects stamps and they're everywhere: posters of stamps, framed envelopes from the first day each stamp came out, fat binders full of them. One whole bulletin board is a map of the world with a different stamp pinned by every country.
+
+Your brother's desk is easy to find. His name tag is taped right on top, with a number line and a plastic cup of Spongebob pencils.
+
+Choices:
+- Get the yellow folder out of his desk -> folder_clean_coat_unc_a_direct
+- Look around at the stamps for a minute -> room10_browse_clean_coat_unc_a
+
+---
+
+scene: hallend_clean_coat_unc_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_coat_unc_b
+- Go borrow Mr. Frank's master key -> room10_inside_clean_coat_unc_a
+
+---
+
+scene: lostandfound_late_busy
+
+You still have to grab your coat, and the office is busy now. Two parents at the counter, a teacher making copies, Mrs. Walker on the phone. You stand there for what feels like a very long time before she's free. The coat takes thirty seconds once she gets to you. It was the waiting that cost you.
+
+Choices:
+- Hurry back to Room 9 -> badend_whistle
+
+---
+
+scene: folder_clean_nocoat_unc_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> lostandfound_late_busy
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_inside_clean_nocoat_unc_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_clean_nocoat_unc_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: lostandfound_late_quiet_clean
+
+You still have to grab your coat. Mrs. Walker is at her desk, doing three things at once but free enough. "Winter coat? Back hook, left side." She already knew. Thirty seconds.
+
+Choices:
+- Hurry back to Room 9 -> mcclintock_rushing_clean
+
+---
+
+scene: library_latecheck_clean_nocoat_a
+
+Miss Feeney is still at the desk. She checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and then the walk back toward Room 9, and both of them feel a lot longer than they did the first time.
+
+Choices:
+- Head back with the packet -> lostandfound_late_busy
+
+---
+
+scene: folder_clean_nocoat_unc_a_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> lostandfound_late_quiet_clean
+- Go all the way back to the library to check -> library_latecheck_clean_nocoat_a
+
+---
+
+scene: folder_clean_nocoat_unc_b_browsed
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers. You've already burned a few minutes on the stamps, too.
+
+Choices:
+- Trust the work you already did -> lostandfound_late_busy
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_browse_clean_nocoat_unc_a
+
+You can't help it. Your brother has an index card about a sculptor named Constantin Brancusi pinned next to a stamp from Romania. There's a first-day cover with a whistling frog on it, a seven-cent stamp from Bermuda. You lose three whole minutes and you find every one of them worth it.
+
+Choices:
+- Okay, grab the folder -> folder_clean_nocoat_unc_b_browsed
+
+---
+
+scene: room10_inside_clean_nocoat_unc_a
+
+You're in the stamp room. It's the same size as your own classroom, but it doesn't feel anything like it. Mr. Bradley collects stamps and they're everywhere: posters of stamps, framed envelopes from the first day each stamp came out, fat binders full of them. One whole bulletin board is a map of the world with a different stamp pinned by every country.
+
+Your brother's desk is easy to find. His name tag is taped right on top, with a number line and a plastic cup of Spongebob pencils.
+
+Choices:
+- Get the yellow folder out of his desk -> folder_clean_nocoat_unc_a_direct
+- Look around at the stamps for a minute -> room10_browse_clean_nocoat_unc_a
+
+---
+
+scene: hallend_clean_nocoat_unc_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_nocoat_unc_b
+- Go borrow Mr. Frank's master key -> room10_inside_clean_nocoat_unc_a
+
+---
+
+scene: frank_clean_unc
+
+He's cheerful and in no hurry at all. You tell him you're trying to get to Mr. Bradley's room. He mentions the lost-and-found before you even ask, and then he taps the giant ring of keys on his belt and says he's got a master key for every room in the building if you ever need it. ("Ubiquitous" was the challenge word last week and you still sort of remember what it means. Mr. Frank's keys are ubiquitous.)
+
+The whole thing takes a couple of minutes you didn't really have.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_clean_coat_unc_friendly
+- Head for Mr. Bradley's room -> hallend_clean_nocoat_unc_friendly
+
+---
+
+scene: hallend_clean_coat_unc_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_coat_unc_a
+
+---
+
+scene: hallend_clean_nocoat_unc_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_nocoat_unc_a
+
+---
+
+scene: junction_clean_unc_unengaged
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+Mr. Frank gives you a friendly nod and goes back to his mopping.
+
+Choices:
+- Stop and talk to Mr. Frank -> frank_clean_unc
+- Duck into the office for your coat from the lost-and-found -> hallend_clean_coat_unc_unengaged
+- Keep walking toward Mr. Bradley's room -> hallend_clean_nocoat_unc_unengaged
+
+---
+
+scene: junction_clean_unc_friendly
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+"Get that pencil sorted out?" Mr. Frank calls, leaning on his mop. You nod. "Good. Go on, then." It's a small thing, but it helps.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_clean_coat_unc_friendly
+- Keep walking toward Mr. Bradley's room -> hallend_clean_nocoat_unc_friendly
+
+---
+
+scene: hallend_clean_coat_unc_wary
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. Down at the far end you spot Mr. Frank and his master key. You could ask him. You decide not to.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_coat_unc_b
+
+---
+
+scene: hallend_clean_nocoat_unc_wary
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. Down at the far end you spot Mr. Frank and his master key. You could ask him. You decide not to.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_nocoat_unc_b
+
+---
+
+scene: junction_clean_unc_wary
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+You see Mr. Frank glance up from his mop. You keep your eyes straight ahead and keep moving. You'd rather not get into it.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_clean_coat_unc_wary
+- Keep walking toward Mr. Bradley's room -> hallend_clean_nocoat_unc_wary
+
+---
+
+scene: sidedoor_clean
+
+The door opens easy. The air outside is warm and smells like spring and wet blacktop. Around the corner you can hear voices. Your class. Playing kickball. Right now. Without you. Your sneakers are still perfect, and the blacktop is right there.
+
+One step. Two steps.
+
+"Hey."
+
+Mr. Frank is ten feet away with a mop. He's not mad. He just looks patient, and very sure of himself.
+
+Choices:
+- Say sorry and go back inside -> junction_clean_unc_friendly
+- Slip back inside without a word -> junction_clean_unc_wary
+- Keep going -> badend_caught
+
+---
+
+scene: room10_inside_toolate
+
+You're in the stamp room. Stamps on the walls, stamps in binders, a whole map of the world made of stamps. There's no time to enjoy any of it.
+
+Your brother's desk is right there, name tag on top. Out the window your class looks impossibly far away, and the clock over the door is not on your side.
+
+Choices:
+- Grab the yellow folder and go -> folder_toolate
+- Look at the stamps for just a second, even now -> room10_browse_toolate
+
+---
+
+scene: folder_clean_coat_vis_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You find the one answer you'd worried about and remember exactly what Miss Feeney told you. She was right. You were right.
+
+You did finish this. Somehow it ended up in your brother's folder.
+
+Choices:
+- Grab the packet and go -> mcclintock_rushing_clean
+
+---
+
+scene: room10_inside_clean_coat_vis_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_clean_coat_vis_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: hallend_clean_coat_vis_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_toolate
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_coat_vis_b
+- Go borrow Mr. Frank's master key -> room10_inside_clean_coat_vis_b
+
+---
+
+scene: folder_clean_nocoat_vis_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You find the one answer you'd worried about and remember exactly what Miss Feeney told you. She was right. You were right.
+
+You did finish this. Somehow it ended up in your brother's folder.
+
+Choices:
+- Grab the packet and go -> lostandfound_late_busy
+
+---
+
+scene: room10_inside_clean_nocoat_vis_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_clean_nocoat_vis_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: hallend_clean_nocoat_vis_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_toolate
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_nocoat_vis_b
+- Go borrow Mr. Frank's master key -> room10_inside_clean_nocoat_vis_b
+
+---
+
+scene: frank_clean_vis
+
+He's cheerful and in no hurry at all. You tell him you're trying to get to Mr. Bradley's room. He mentions the lost-and-found before you even ask, and then he taps the giant ring of keys on his belt and says he's got a master key for every room in the building if you ever need it. ("Ubiquitous" was the challenge word last week and you still sort of remember what it means. Mr. Frank's keys are ubiquitous.)
+
+The whole thing takes a couple of minutes you didn't really have.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_clean_coat_vis_friendly
+- Head for Mr. Bradley's room -> hallend_clean_nocoat_vis_friendly
+
+---
+
+scene: hallend_clean_coat_vis_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_coat_vis_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_coat_vis_b
+
+---
+
+scene: hallend_clean_nocoat_vis_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_clean_nocoat_vis_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_clean_nocoat_vis_b
+
+---
+
+scene: junction_clean_vis_unengaged
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+Mr. Frank gives you a friendly nod and goes back to his mopping.
+
+Choices:
+- Stop and talk to Mr. Frank -> frank_clean_vis
+- Duck into the office for your coat from the lost-and-found -> hallend_clean_coat_vis_unengaged
+- Keep walking toward Mr. Bradley's room -> hallend_clean_nocoat_vis_unengaged
+
+---
+
+scene: library_clean_asked
+
+She doesn't even have to think about it. She tells you your answer was right, and she does it without making you feel dumb for asking.
+
+It's a good feeling, knowing you remembered it right, even before you have the packet back in your hands.
+
+Choices:
+- Head for Mr. Bradley's room -> junction_clean_vis_unengaged
+
+---
+
+scene: library_clean
+
+Miss Feeney loves books and it shows. There are books on the shelves, book covers tacked all over the walls and even the ceiling, and a book standing up on every table. She's reshelving a cart near the door, and she notices you right away and raises one eyebrow, the friendly way that means shouldn't you be somewhere else?
+
+Choices:
+- Ask her about the part of the assignment you're not sure about -> library_clean_asked
+- Just keep going -> junction_clean_unc_unengaged
+
+---
+
+scene: hallway_clean
+
+Sunshine pours through the skylights along the broad, bright, clean hallway. It smells like floor wax and Tuesday's lunch. Your backpack is over one shoulder and your sneakers are still bright white.
+
+To your left is the side door out to the playground. Straight ahead and to the right is the way to Mr. Bradley's room and the office. And just past where the hall crosses is the school library.
+
+Choices:
+- Head toward Mr. Bradley's room -> junction_clean_unc_unengaged
+- Try the side door -> sidedoor_clean
+- Stop at the library on the way -> library_clean
+
+---
+
+scene: ending_brief_kickball_scuffed
+
+Two turns before the whistle. The mud somehow stays off. The smudge stays on. You're grinning anyway.
+
+Saturday is going to be a talk. At least you were out there.
+
+THE END
+
+---
+
+scene: ending_brief_sunshine_scuffed
+
+Four minutes of sunshine. Smudged sneaker. The whistle blows.
+
+Still counts.
+
+THE END
+
+---
+
+scene: door_rushing_scuffed
+
+The playground door. Sunshine. Kickball. Mud. The whistle could blow any minute, and the smudge is still on your sneaker. Pick fast.
+
+Choices:
+- Go for the kickball game -> ending_brief_kickball_scuffed
+- Stay on the blacktop -> ending_brief_sunshine_scuffed
+
+---
+
+scene: mcclintock_rushing_scuffed
+
+She takes the packet. Her eyes move down it fast. She nods.
+
+"Go ahead, Jamie. Hurry up."
+
+You're already moving.
+
+Choices:
+- Get to the door -> door_rushing_scuffed
+
+---
+
+scene: folder_scuffed_coat_unc_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> mcclintock_rushing_scuffed
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_inside_scuffed_coat_unc_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_scuffed_coat_unc_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: ending_muddy_scuffed
+
+The mud joined the smudge. The kick was worth it. You knew that when you decided, and you'd decide the same way again.
+
+Saturday was already going to be a talk. Now it's a better story.
+
+THE END
+
+---
+
+scene: kickball_ontime_scuffed
+
+Your friends wave you in. The mud joins the smudge. At this point Saturday's talk is going to happen no matter what, so you might as well make it count. You play. You're laughing. The sun is warm.
+
+Choices:
+- Slide into first base anyway -> ending_muddy_scuffed
+
+---
+
+scene: ending_careful_scuffed
+
+The sneakers have a smudge. Not a disaster. The sun is still warm, you made it outside, and that counts.
+
+Saturday will be fine. Probably.
+
+THE END
+
+---
+
+scene: blacktop_ontime_scuffed
+
+Your friends wave you toward the field. You point at your sneaker and shake your head. The smudge is there but it didn't get any worse, and that's a small thing but a real one. You find a spot in the sun.
+
+Choices:
+- Soak up the sun -> ending_careful_scuffed
+
+---
+
+scene: ending_doorway_scuffed
+
+Fifteen minutes of sunshine with a smudged sneaker. Your friends were glad to see you. The sun was warm.
+
+Saturday is going to be an interesting talk. Right now you find it hard to care.
+
+THE END
+
+---
+
+scene: doorway_ontime_scuffed
+
+You stand in the doorway a second. The smudge catches the light. Then somebody from your class spots you through the fence and yells your name, and you push the door open anyway.
+
+Choices:
+- Push the door open and step out into the sun -> ending_doorway_scuffed
+
+---
+
+scene: door_ontime_scuffed
+
+The playground door. Sunshine, blacktop, kickball. The field is muddy from last week's rain. There's already that smudge on your sneaker you've been trying not to think about. Nobody has spotted you yet, and you have time.
+
+Choices:
+- Run for the kickball game, even if the field ruins the sneakers -> kickball_ontime_scuffed
+- Stay on the blacktop and find your friends -> blacktop_ontime_scuffed
+- Just stand here a second -> doorway_ontime_scuffed
+
+---
+
+scene: mcclintock_ontime_scuffed
+
+She takes the packet and reads it over for a moment. Then she looks up.
+
+"You may go outside, Jamie."
+
+Eight words. The best eight words of the whole school year.
+
+Choices:
+- Get to the door -> door_ontime_scuffed
+
+---
+
+scene: library_latecheck_scuffed_coat_a
+
+Miss Feeney is still at the desk. She checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and then the walk back toward Room 9, and both of them feel a lot longer than they did the first time.
+
+Choices:
+- Head back with the packet -> mcclintock_rushing_scuffed
+
+---
+
+scene: folder_scuffed_coat_unc_a_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> mcclintock_ontime_scuffed
+- Go all the way back to the library to check -> library_latecheck_scuffed_coat_a
+
+---
+
+scene: folder_scuffed_coat_unc_b_browsed
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers. You've already burned a few minutes on the stamps, too.
+
+Choices:
+- Trust the work you already did -> mcclintock_rushing_scuffed
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_browse_scuffed_coat_unc_a
+
+You can't help it. Your brother has an index card about a sculptor named Constantin Brancusi pinned next to a stamp from Romania. There's a first-day cover with a whistling frog on it, a seven-cent stamp from Bermuda. You lose three whole minutes and you find every one of them worth it.
+
+Choices:
+- Okay, grab the folder -> folder_scuffed_coat_unc_b_browsed
+
+---
+
+scene: room10_inside_scuffed_coat_unc_a
+
+You're in the stamp room. It's the same size as your own classroom, but it doesn't feel anything like it. Mr. Bradley collects stamps and they're everywhere: posters of stamps, framed envelopes from the first day each stamp came out, fat binders full of them. One whole bulletin board is a map of the world with a different stamp pinned by every country.
+
+Your brother's desk is easy to find. His name tag is taped right on top, with a number line and a plastic cup of Spongebob pencils.
+
+Choices:
+- Get the yellow folder out of his desk -> folder_scuffed_coat_unc_a_direct
+- Look around at the stamps for a minute -> room10_browse_scuffed_coat_unc_a
+
+---
+
+scene: hallend_scuffed_coat_unc_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_coat_unc_b
+- Go borrow Mr. Frank's master key -> room10_inside_scuffed_coat_unc_a
+
+---
+
+scene: folder_scuffed_nocoat_unc_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> lostandfound_late_busy
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_inside_scuffed_nocoat_unc_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_scuffed_nocoat_unc_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: lostandfound_late_quiet_scuffed
+
+You still have to grab your coat. Mrs. Walker is at her desk, doing three things at once but free enough. "Winter coat? Back hook, left side." She already knew. Thirty seconds.
+
+Choices:
+- Hurry back to Room 9 -> mcclintock_rushing_scuffed
+
+---
+
+scene: library_latecheck_scuffed_nocoat_a
+
+Miss Feeney is still at the desk. She checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and then the walk back toward Room 9, and both of them feel a lot longer than they did the first time.
+
+Choices:
+- Head back with the packet -> lostandfound_late_busy
+
+---
+
+scene: folder_scuffed_nocoat_unc_a_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> lostandfound_late_quiet_scuffed
+- Go all the way back to the library to check -> library_latecheck_scuffed_nocoat_a
+
+---
+
+scene: folder_scuffed_nocoat_unc_b_browsed
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers. You've already burned a few minutes on the stamps, too.
+
+Choices:
+- Trust the work you already did -> lostandfound_late_busy
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_browse_scuffed_nocoat_unc_a
+
+You can't help it. Your brother has an index card about a sculptor named Constantin Brancusi pinned next to a stamp from Romania. There's a first-day cover with a whistling frog on it, a seven-cent stamp from Bermuda. You lose three whole minutes and you find every one of them worth it.
+
+Choices:
+- Okay, grab the folder -> folder_scuffed_nocoat_unc_b_browsed
+
+---
+
+scene: room10_inside_scuffed_nocoat_unc_a
+
+You're in the stamp room. It's the same size as your own classroom, but it doesn't feel anything like it. Mr. Bradley collects stamps and they're everywhere: posters of stamps, framed envelopes from the first day each stamp came out, fat binders full of them. One whole bulletin board is a map of the world with a different stamp pinned by every country.
+
+Your brother's desk is easy to find. His name tag is taped right on top, with a number line and a plastic cup of Spongebob pencils.
+
+Choices:
+- Get the yellow folder out of his desk -> folder_scuffed_nocoat_unc_a_direct
+- Look around at the stamps for a minute -> room10_browse_scuffed_nocoat_unc_a
+
+---
+
+scene: hallend_scuffed_nocoat_unc_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_nocoat_unc_b
+- Go borrow Mr. Frank's master key -> room10_inside_scuffed_nocoat_unc_a
+
+---
+
+scene: frank_scuffed_unc
+
+He's cheerful and in no hurry at all. You tell him you're trying to get to Mr. Bradley's room. He mentions the lost-and-found before you even ask, and then he taps the giant ring of keys on his belt and says he's got a master key for every room in the building if you ever need it. ("Ubiquitous" was the challenge word last week and you still sort of remember what it means. Mr. Frank's keys are ubiquitous.)
+
+The whole thing takes a couple of minutes you didn't really have.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_scuffed_coat_unc_friendly
+- Head for Mr. Bradley's room -> hallend_scuffed_nocoat_unc_friendly
+
+---
+
+scene: hallend_scuffed_coat_unc_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_coat_unc_a
+
+---
+
+scene: hallend_scuffed_nocoat_unc_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_nocoat_unc_a
+
+---
+
+scene: junction_scuffed_unc_unengaged
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+Mr. Frank gives you a friendly nod and goes back to his mopping.
+
+Choices:
+- Stop and talk to Mr. Frank -> frank_scuffed_unc
+- Duck into the office for your coat from the lost-and-found -> hallend_scuffed_coat_unc_unengaged
+- Keep walking toward Mr. Bradley's room -> hallend_scuffed_nocoat_unc_unengaged
+
+---
+
+scene: junction_scuffed_unc_friendly
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+"Get that pencil sorted out?" Mr. Frank calls, leaning on his mop. You nod. "Good. Go on, then." It's a small thing, but it helps.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_scuffed_coat_unc_friendly
+- Keep walking toward Mr. Bradley's room -> hallend_scuffed_nocoat_unc_friendly
+
+---
+
+scene: hallend_scuffed_coat_unc_wary
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. The smudge on your sneaker hasn't gone anywhere. Down at the far end you spot Mr. Frank and his master key. You could ask him. You decide not to.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_coat_unc_b
+
+---
+
+scene: hallend_scuffed_nocoat_unc_wary
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. The smudge on your sneaker hasn't gone anywhere. Down at the far end you spot Mr. Frank and his master key. You could ask him. You decide not to.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_nocoat_unc_b
+
+---
+
+scene: junction_scuffed_unc_wary
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+You see Mr. Frank glance up from his mop. You keep your eyes straight ahead and keep moving. You'd rather not get into it.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_scuffed_coat_unc_wary
+- Keep walking toward Mr. Bradley's room -> hallend_scuffed_nocoat_unc_wary
+
+---
+
+scene: sidedoor_scuffed
+
+The door opens easy. The air outside is warm and smells like spring and wet blacktop. Around the corner you can hear voices. Your class. Playing kickball. Right now. Without you. Your sneaker is already smudged, but that's nothing compared to what's out there.
+
+One step. Two steps.
+
+"Hey."
+
+Mr. Frank is ten feet away with a mop. He's not mad. He just looks patient, and very sure of himself.
+
+Choices:
+- Say sorry and go back inside -> junction_scuffed_unc_friendly
+- Slip back inside without a word -> junction_scuffed_unc_wary
+- Keep going -> badend_caught
+
+---
+
+scene: folder_scuffed_coat_vis_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You find the one answer you'd worried about and remember exactly what Miss Feeney told you. She was right. You were right.
+
+You did finish this. Somehow it ended up in your brother's folder.
+
+Choices:
+- Grab the packet and go -> mcclintock_rushing_scuffed
+
+---
+
+scene: room10_inside_scuffed_coat_vis_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_scuffed_coat_vis_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: hallend_scuffed_coat_vis_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_toolate
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_coat_vis_b
+- Go borrow Mr. Frank's master key -> room10_inside_scuffed_coat_vis_b
+
+---
+
+scene: folder_scuffed_nocoat_vis_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You find the one answer you'd worried about and remember exactly what Miss Feeney told you. She was right. You were right.
+
+You did finish this. Somehow it ended up in your brother's folder.
+
+Choices:
+- Grab the packet and go -> lostandfound_late_busy
+
+---
+
+scene: room10_inside_scuffed_nocoat_vis_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_scuffed_nocoat_vis_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: hallend_scuffed_nocoat_vis_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_toolate
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_nocoat_vis_b
+- Go borrow Mr. Frank's master key -> room10_inside_scuffed_nocoat_vis_b
+
+---
+
+scene: frank_scuffed_vis
+
+He's cheerful and in no hurry at all. You tell him you're trying to get to Mr. Bradley's room. He mentions the lost-and-found before you even ask, and then he taps the giant ring of keys on his belt and says he's got a master key for every room in the building if you ever need it. ("Ubiquitous" was the challenge word last week and you still sort of remember what it means. Mr. Frank's keys are ubiquitous.)
+
+The whole thing takes a couple of minutes you didn't really have.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_scuffed_coat_vis_friendly
+- Head for Mr. Bradley's room -> hallend_scuffed_nocoat_vis_friendly
+
+---
+
+scene: hallend_scuffed_coat_vis_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_coat_vis_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_coat_vis_b
+
+---
+
+scene: hallend_scuffed_nocoat_vis_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. The smudge on your sneaker hasn't gone anywhere.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_scuffed_nocoat_vis_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_scuffed_nocoat_vis_b
+
+---
+
+scene: junction_scuffed_vis_unengaged
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+Mr. Frank gives you a friendly nod and goes back to his mopping.
+
+Choices:
+- Stop and talk to Mr. Frank -> frank_scuffed_vis
+- Duck into the office for your coat from the lost-and-found -> hallend_scuffed_coat_vis_unengaged
+- Keep walking toward Mr. Bradley's room -> hallend_scuffed_nocoat_vis_unengaged
+
+---
+
+scene: library_scuffed_asked
+
+She doesn't even have to think about it. She tells you your answer was right, and she does it without making you feel dumb for asking.
+
+It's a good feeling, knowing you remembered it right, even before you have the packet back in your hands.
+
+Choices:
+- Head for Mr. Bradley's room -> junction_scuffed_vis_unengaged
+
+---
+
+scene: library_scuffed
+
+Miss Feeney loves books and it shows. There are books on the shelves, book covers tacked all over the walls and even the ceiling, and a book standing up on every table. She's reshelving a cart near the door, and she notices you right away and raises one eyebrow, the friendly way that means shouldn't you be somewhere else?
+
+Choices:
+- Ask her about the part of the assignment you're not sure about -> library_scuffed_asked
+- Just keep going -> junction_scuffed_unc_unengaged
+
+---
+
+scene: hallway_scuffed
+
+Sunshine pours through the skylights along the broad, bright, clean hallway. It smells like floor wax and Tuesday's lunch. Your backpack is over one shoulder, and there's that brown smudge on your sneaker that you keep trying not to look at.
+
+To your left is the side door out to the playground. Straight ahead and to the right is the way to Mr. Bradley's room and the office. And just past where the hall crosses is the school library.
+
+Choices:
+- Head toward Mr. Bradley's room -> junction_scuffed_unc_unengaged
+- Try the side door -> sidedoor_scuffed
+- Stop at the library on the way -> library_scuffed
+
+---
+
+scene: closet_late_nobackpack_coat_b
+
+On the way back you swing through your own classroom for the backpack. The heap is right where you left it, your yellow backpack at the bottom, the muddy boots still in the middle of it all.
+
+You reach in carefully. For one second a boot tips toward your left sneaker, almost, and then doesn't. Backpack out. Hat inside. Mittens inside. Sneakers still white. You'd forgotten how good that feels.
+
+Choices:
+- Now go turn in the packet -> mcclintock_rushing_clean
+
+---
+
+scene: folder_nobackpack_coat_unc_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> closet_late_nobackpack_coat_b
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_inside_nobackpack_coat_unc_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_nobackpack_coat_unc_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: closet_late_nobackpack_coat_a
+
+On the way back you swing through your own classroom for the backpack. The heap is right where you left it, your yellow backpack at the bottom, the muddy boots still in the middle of it all.
+
+You reach in carefully. For one second a boot tips toward your left sneaker, almost, and then doesn't. Backpack out. Hat inside. Mittens inside. Sneakers still white. You'd forgotten how good that feels.
+
+Choices:
+- Now go turn in the packet -> mcclintock_ontime_clean
+
+---
+
+scene: library_latecheck_nobackpack_coat_a
+
+Miss Feeney is still at the desk. She checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and then the walk back toward Room 9, and both of them feel a lot longer than they did the first time.
+
+Choices:
+- Head back with the packet -> closet_late_nobackpack_coat_b
+
+---
+
+scene: folder_nobackpack_coat_unc_a_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> closet_late_nobackpack_coat_a
+- Go all the way back to the library to check -> library_latecheck_nobackpack_coat_a
+
+---
+
+scene: folder_nobackpack_coat_unc_b_browsed
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers. You've already burned a few minutes on the stamps, too.
+
+Choices:
+- Trust the work you already did -> closet_late_nobackpack_coat_b
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_browse_nobackpack_coat_unc_a
+
+You can't help it. Your brother has an index card about a sculptor named Constantin Brancusi pinned next to a stamp from Romania. There's a first-day cover with a whistling frog on it, a seven-cent stamp from Bermuda. You lose three whole minutes and you find every one of them worth it.
+
+Choices:
+- Okay, grab the folder -> folder_nobackpack_coat_unc_b_browsed
+
+---
+
+scene: room10_inside_nobackpack_coat_unc_a
+
+You're in the stamp room. It's the same size as your own classroom, but it doesn't feel anything like it. Mr. Bradley collects stamps and they're everywhere: posters of stamps, framed envelopes from the first day each stamp came out, fat binders full of them. One whole bulletin board is a map of the world with a different stamp pinned by every country.
+
+Your brother's desk is easy to find. His name tag is taped right on top, with a number line and a plastic cup of Spongebob pencils.
+
+Choices:
+- Get the yellow folder out of his desk -> folder_nobackpack_coat_unc_a_direct
+- Look around at the stamps for a minute -> room10_browse_nobackpack_coat_unc_a
+
+---
+
+scene: hallend_nobackpack_coat_unc_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_coat_unc_b
+- Go borrow Mr. Frank's master key -> room10_inside_nobackpack_coat_unc_a
+
+---
+
+scene: closet_late_nobackpack_nocoat_b
+
+On the way back you swing through your own classroom for the backpack. The heap is right where you left it, your yellow backpack at the bottom, the muddy boots still in the middle of it all.
+
+You reach in carefully. For one second a boot tips toward your left sneaker, almost, and then doesn't. Backpack out. Hat inside. Mittens inside. Sneakers still white. You'd forgotten how good that feels.
+
+Choices:
+- Now go turn in the packet -> lostandfound_late_busy
+
+---
+
+scene: folder_nobackpack_nocoat_unc_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> closet_late_nobackpack_nocoat_b
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_inside_nobackpack_nocoat_unc_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_nobackpack_nocoat_unc_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: lostandfound_late_quiet_nobackpack
+
+You still have to grab your coat. Mrs. Walker is at her desk, doing three things at once but free enough. "Winter coat? Back hook, left side." She already knew. Thirty seconds.
+
+Choices:
+- Hurry back to Room 9 -> mcclintock_rushing_clean
+
+---
+
+scene: closet_late_nobackpack_nocoat_a
+
+On the way back you swing through your own classroom for the backpack. The heap is right where you left it, your yellow backpack at the bottom, the muddy boots still in the middle of it all.
+
+You reach in carefully. For one second a boot tips toward your left sneaker, almost, and then doesn't. Backpack out. Hat inside. Mittens inside. Sneakers still white. You'd forgotten how good that feels.
+
+Choices:
+- Now go turn in the packet -> lostandfound_late_quiet_nobackpack
+
+---
+
+scene: library_latecheck_nobackpack_nocoat_a
+
+Miss Feeney is still at the desk. She checks your answer in about thirty seconds and tells you you had it right all along. Then comes the walk back to Room 10, and then the walk back toward Room 9, and both of them feel a lot longer than they did the first time.
+
+Choices:
+- Head back with the packet -> closet_late_nobackpack_nocoat_b
+
+---
+
+scene: folder_nobackpack_nocoat_unc_a_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers.
+
+Choices:
+- Trust the work you already did -> closet_late_nobackpack_nocoat_a
+- Go all the way back to the library to check -> library_latecheck_nobackpack_nocoat_a
+
+---
+
+scene: folder_nobackpack_nocoat_unc_b_browsed
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You did do this. You remember thinking it was right. But now, holding the paper, you're not completely sure about one of the answers. You've already burned a few minutes on the stamps, too.
+
+Choices:
+- Trust the work you already did -> closet_late_nobackpack_nocoat_b
+- Go all the way back to the library to check -> library_latecheck_toolate
+
+---
+
+scene: room10_browse_nobackpack_nocoat_unc_a
+
+You can't help it. Your brother has an index card about a sculptor named Constantin Brancusi pinned next to a stamp from Romania. There's a first-day cover with a whistling frog on it, a seven-cent stamp from Bermuda. You lose three whole minutes and you find every one of them worth it.
+
+Choices:
+- Okay, grab the folder -> folder_nobackpack_nocoat_unc_b_browsed
+
+---
+
+scene: room10_inside_nobackpack_nocoat_unc_a
+
+You're in the stamp room. It's the same size as your own classroom, but it doesn't feel anything like it. Mr. Bradley collects stamps and they're everywhere: posters of stamps, framed envelopes from the first day each stamp came out, fat binders full of them. One whole bulletin board is a map of the world with a different stamp pinned by every country.
+
+Your brother's desk is easy to find. His name tag is taped right on top, with a number line and a plastic cup of Spongebob pencils.
+
+Choices:
+- Get the yellow folder out of his desk -> folder_nobackpack_nocoat_unc_a_direct
+- Look around at the stamps for a minute -> room10_browse_nobackpack_nocoat_unc_a
+
+---
+
+scene: hallend_nobackpack_nocoat_unc_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_nocoat_unc_b
+- Go borrow Mr. Frank's master key -> room10_inside_nobackpack_nocoat_unc_a
+
+---
+
+scene: frank_nobackpack_unc
+
+He's cheerful and in no hurry at all. You tell him you're trying to get to Mr. Bradley's room. He mentions the lost-and-found before you even ask, and then he taps the giant ring of keys on his belt and says he's got a master key for every room in the building if you ever need it. ("Ubiquitous" was the challenge word last week and you still sort of remember what it means. Mr. Frank's keys are ubiquitous.)
+
+The whole thing takes a couple of minutes you didn't really have.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_nobackpack_coat_unc_friendly
+- Head for Mr. Bradley's room -> hallend_nobackpack_nocoat_unc_friendly
+
+---
+
+scene: hallend_nobackpack_coat_unc_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_coat_unc_a
+
+---
+
+scene: hallend_nobackpack_nocoat_unc_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_nocoat_unc_a
+
+---
+
+scene: junction_nobackpack_unc_unengaged
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+Mr. Frank gives you a friendly nod and goes back to his mopping.
+
+Choices:
+- Stop and talk to Mr. Frank -> frank_nobackpack_unc
+- Duck into the office for your coat from the lost-and-found -> hallend_nobackpack_coat_unc_unengaged
+- Keep walking toward Mr. Bradley's room -> hallend_nobackpack_nocoat_unc_unengaged
+
+---
+
+scene: junction_nobackpack_unc_friendly
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+"Get that pencil sorted out?" Mr. Frank calls, leaning on his mop. You nod. "Good. Go on, then." It's a small thing, but it helps.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_nobackpack_coat_unc_friendly
+- Keep walking toward Mr. Bradley's room -> hallend_nobackpack_nocoat_unc_friendly
+
+---
+
+scene: hallend_nobackpack_coat_unc_wary
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. And your backpack is still sitting in the closet. Down at the far end you spot Mr. Frank and his master key. You could ask him. You decide not to.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_coat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_coat_unc_b
+
+---
+
+scene: hallend_nobackpack_nocoat_unc_wary
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. And your backpack is still sitting in the closet. Down at the far end you spot Mr. Frank and his master key. You could ask him. You decide not to.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_nocoat_unc_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_nocoat_unc_b
+
+---
+
+scene: junction_nobackpack_unc_wary
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+You see Mr. Frank glance up from his mop. You keep your eyes straight ahead and keep moving. You'd rather not get into it.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_nobackpack_coat_unc_wary
+- Keep walking toward Mr. Bradley's room -> hallend_nobackpack_nocoat_unc_wary
+
+---
+
+scene: sidedoor_nobackpack
+
+The door opens easy. The air outside is warm and smells like spring and wet blacktop. Around the corner you can hear voices. Your class. Playing kickball. Right now. Without you. You don't even have your coat or your backpack, but who cares right now.
+
+One step. Two steps.
+
+"Hey."
+
+Mr. Frank is ten feet away with a mop. He's not mad. He just looks patient, and very sure of himself.
+
+Choices:
+- Say sorry and go back inside -> junction_nobackpack_unc_friendly
+- Slip back inside without a word -> junction_nobackpack_unc_wary
+- Keep going -> badend_caught
+
+---
+
+scene: folder_nobackpack_coat_vis_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You find the one answer you'd worried about and remember exactly what Miss Feeney told you. She was right. You were right.
+
+You did finish this. Somehow it ended up in your brother's folder.
+
+Choices:
+- Grab the packet and go -> closet_late_nobackpack_coat_b
+
+---
+
+scene: room10_inside_nobackpack_coat_vis_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_nobackpack_coat_vis_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: hallend_nobackpack_coat_vis_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_toolate
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_coat_vis_b
+- Go borrow Mr. Frank's master key -> room10_inside_nobackpack_coat_vis_b
+
+---
+
+scene: folder_nobackpack_nocoat_vis_b_direct
+
+The yellow folder. Inside is your Explorer packet, in your own handwriting, finished. You find the one answer you'd worried about and remember exactly what Miss Feeney told you. She was right. You were right.
+
+You did finish this. Somehow it ended up in your brother's folder.
+
+Choices:
+- Grab the packet and go -> closet_late_nobackpack_nocoat_b
+
+---
+
+scene: room10_inside_nobackpack_nocoat_vis_b
+
+You're in the stamp room. Posters of stamps, framed envelopes, fat binders, a big map of the world with a stamp by every country. Any other day you could look around in here forever.
+
+Your brother's desk is easy to find, with his name tag taped on top. Out the window the playground is full and loud and you are not in it. You can tell this is taking longer than it should.
+
+Choices:
+- Grab the yellow folder and go -> folder_nobackpack_nocoat_vis_b_direct
+- Look around at the stamps for a minute. They'll be quick -> room10_browse_toolate
+
+---
+
+scene: hallend_nobackpack_nocoat_vis_friendly
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_toolate
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_nocoat_vis_b
+- Go borrow Mr. Frank's master key -> room10_inside_nobackpack_nocoat_vis_b
+
+---
+
+scene: frank_nobackpack_vis
+
+He's cheerful and in no hurry at all. You tell him you're trying to get to Mr. Bradley's room. He mentions the lost-and-found before you even ask, and then he taps the giant ring of keys on his belt and says he's got a master key for every room in the building if you ever need it. ("Ubiquitous" was the challenge word last week and you still sort of remember what it means. Mr. Frank's keys are ubiquitous.)
+
+The whole thing takes a couple of minutes you didn't really have.
+
+Choices:
+- Duck into the office for your coat from the lost-and-found -> hallend_nobackpack_coat_vis_friendly
+- Head for Mr. Bradley's room -> hallend_nobackpack_nocoat_vis_friendly
+
+---
+
+scene: hallend_nobackpack_coat_vis_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. Mrs. Walker had your coat on the back hook before you finished asking, black with yellow and orange patches, still warm. It's over your arm now. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_coat_vis_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_coat_vis_b
+
+---
+
+scene: hallend_nobackpack_nocoat_vis_unengaged
+
+The end of the hall. There's a scuffed metal panel nobody ever opens, and one door: Mr. Bradley's room, the stamp teacher the kids call Mr. Potato Head. It's locked, and he's not in it. You still have to swing back for your coat. And your backpack is still sitting in the closet.
+
+Choices:
+- Wait it out until Mr. Bradley comes back with his key -> room10_inside_nobackpack_nocoat_vis_b
+- Run and flag Mr. Bradley down out on the playground -> room10_inside_nobackpack_nocoat_vis_b
+
+---
+
+scene: junction_nobackpack_vis_unengaged
+
+Mr. Frank is mopping a little way down the hall. Through the office window you can see Mrs. Walker doing about four things at once. The lost-and-found rack is just inside the office door.
+
+Mr. Frank gives you a friendly nod and goes back to his mopping.
+
+Choices:
+- Stop and talk to Mr. Frank -> frank_nobackpack_vis
+- Duck into the office for your coat from the lost-and-found -> hallend_nobackpack_coat_vis_unengaged
+- Keep walking toward Mr. Bradley's room -> hallend_nobackpack_nocoat_vis_unengaged
+
+---
+
+scene: library_nobackpack_asked
+
+She doesn't even have to think about it. She tells you your answer was right, and she does it without making you feel dumb for asking.
+
+It's a good feeling, knowing you remembered it right, even before you have the packet back in your hands.
+
+Choices:
+- Head for Mr. Bradley's room -> junction_nobackpack_vis_unengaged
+
+---
+
+scene: library_nobackpack
+
+Miss Feeney loves books and it shows. There are books on the shelves, book covers tacked all over the walls and even the ceiling, and a book standing up on every table. She's reshelving a cart near the door, and she notices you right away and raises one eyebrow, the friendly way that means shouldn't you be somewhere else?
+
+Choices:
+- Ask her about the part of the assignment you're not sure about -> library_nobackpack_asked
+- Just keep going -> junction_nobackpack_unc_unengaged
+
+---
+
+scene: hallway_nobackpack
+
+Sunshine pours through the skylights along the broad, bright, clean hallway. It smells like floor wax and Tuesday's lunch. You've got your pencil and nothing else. No backpack, no hat, no mittens. You'll deal with that later.
+
+To your left is the side door out to the playground. Straight ahead and to the right is the way to Mr. Bradley's room and the office. And just past where the hall crosses is the school library.
+
+Choices:
+- Head toward Mr. Bradley's room -> junction_nobackpack_unc_unengaged
+- Try the side door -> sidedoor_nobackpack
+- Stop at the library on the way -> library_nobackpack
+
+---
