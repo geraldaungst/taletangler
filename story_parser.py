@@ -177,7 +177,7 @@ class StoryParser:
                     self.active_scene,
                     self.cur_line,
                     errors.ErrText.DUPLICATE_CHOICES_SECTION.value,
-                    choice_count
+                    choice_count + 1    # The extra choices begin with the next choice line
                 ))
                 return None
             self.active_choices_section = True

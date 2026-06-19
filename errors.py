@@ -50,6 +50,7 @@ def story_exists(arg):
 def display_errors(error_list: list[TTError], error_type: str, verbose_mode: bool) -> None:
     if error_type == "error":
         header = (
+            "\n========================================\n"
             "Critical errors found in the story file:\n"
             "========================================\n"
             "Errors below will prevent the story from running."
@@ -57,6 +58,7 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
         prefix = "Errors in scene"
     elif error_type == "note":
         header = (
+            "\n=================\n"
             "Story file notes:\n"
             "=================\n"
             "Notes below are not critical errors, but will cause the story to not run as expected."
@@ -77,7 +79,7 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
             print(f"    Line {error.line}", end="")
             if error.duplicate_choice_boundary is not None:
                 print(
-                    f", (extra choices begin at line {error.duplicate_choice_boundary})",
+                    f", (extra choices begin with choice {error.duplicate_choice_boundary})",
                     end="",
                 )
             print(f": {error.text} ")
