@@ -1,6 +1,5 @@
 # macOS system files
 .DS_Store
-parser_stress_test*.ttale
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

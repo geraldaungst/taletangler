@@ -1,0 +1,102 @@
+These frontmatter lines are ignored by the parser (not title: or author:).
+This file deliberately triggers every error and note type the parser emits.
+Rename to .ttale after download. Run once plain, once with -w to see notes.
+
+Title: Parser Stress Test
+Author: Test Harness
+
+Scene: Start
+
+A clean starting scene. This should produce no errors or notes.
+
+Choices:
+- Continue on -> Good Ending
+
+---
+
+Scene: Good Ending
+
+A clean ending scene. No errors or notes expected here.
+
+THE END
+
+---
+
+Scene: Dup Choices
+
+This scene declares two Choices sections. The second one should be merged
+into the first and flagged as a note.
+
+Choices:
+- First choice -> Good Ending
+- Second choice -> Good Ending
+
+Choices:
+- Third choice -> Good Ending
+
+---
+
+Scene: Inline Added
+
+This scene puts a real-looking choice on the same line as the Choices keyword.
+
+Choices: - Inline choice -> Good Ending
+
+---
+
+Scene: Inline Invalid
+
+This scene puts non-choice junk on the Choices line, then recovers with a
+real Choices section so it stays otherwise valid.
+
+Choices: this trailing text is not a choice
+
+Choices:
+- A real recovery choice -> Good Ending
+
+---
+
+Scene: Appears Choice
+
+- This choice-looking line sits in the description -> Good Ending
+
+Choices:
+- A proper choice -> Good Ending
+
+---
+
+Scene: Malformed
+
+Four malformed choice lines, then one valid choice.
+
+Choices:
+- This choice has no arrow at all
+- This choice has too many arrows -> here -> there
+- This choice has an empty destination ->
+This choice has no leading dash -> Good Ending
+- This one is actually valid -> Good Ending
+
+---
+
+Scene: No Choices Scene
+
+This scene has a description but never declares a Choices section or an
+ending, so reaching the next separator should flag it.
+
+---
+
+Scene:
+
+This scene was given no tag, so the parser should assign a placeholder.
+
+THE END
+
+---
+
+This stray line sits between a separator and the next scene tag.
+
+Scene: After Junk
+
+A normal scene following stray text. No errors expected in this scene itself.
+
+THE END
