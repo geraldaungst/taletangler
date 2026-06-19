@@ -43,7 +43,7 @@ def story_exists(arg):
     story_file = Path(arg).expanduser().resolve()
     if not story_file.exists():
         raise argparse.ArgumentTypeError("Story file does not exist.")
-    elif story_file.suffix.lower() != ".txt":
+    elif story_file.suffix.lower() not in (".txt", ".ttale"):
         raise argparse.ArgumentTypeError("Incorrect story file type. Must be plain text.")
     return story_file
 
@@ -85,22 +85,20 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
         error_counter = Counter(error.type for error in errors)
         print(f"Total {error_type}s: {len(errors)}")
         print(f"Number of {error_type}s by type:")
-        for error_type, count in error_counter.items():
-            print(f"{error_type}: {count} {error_type}s")
+        for error_code, count in error_counter.items():
+            print(f"{error_code}: {count} {error_type}s")
         print("Run with --writer to see individual details.")
 
 
 def report_errors(error_list: list[TTError], note_list: list[TTError], verbose_mode: bool) -> None:
-    errors_exist = error_list != []
-    notes_exist = note_list != []
-    if not errors_exist and not notes_exist:
+    if not error_list and not note_list:
         print("No errors or problems found in the story file.")
         return
-    if errors_exist:
+    if error_list:
         display_errors(error_list, "error", verbose_mode)
-        if notes_exist and not verbose_mode:
+        if note_list and not verbose_mode:
             print("Additional non-critical notes also found.")
             print("Fix critical errors first, or use --writer to see all details.")
             return
-    if notes_exist:
+    if note_list:
         display_errors(note_list, "note", verbose_mode)
