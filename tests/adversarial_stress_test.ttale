@@ -1,0 +1,146 @@
+These frontmatter lines are ignored by the parser (not title: or author:).
+This file probes ambiguous lines and realistic young-writer mistakes.
+Rename to .ttale after download. Run once plain, once with -w.
+
+Title: Adversarial Stress Test
+Author: Test Harness
+
+Scene: Prose Choices
+
+Choices: in life are not always easy to make, Jamie thought.
+
+The sentence above is real description that happens to start with the word Choices.
+
+Choices:
+- Move on -> Good Ending
+
+---
+
+Scene: Prose Scene
+
+Scene: of the crime was grim, but Jamie pressed on down the hall.
+
+The line above is real description that happens to start with the word Scene.
+
+Choices:
+- Move on -> Good Ending
+
+---
+
+Scene: Accidental End
+
+Jamie finished the packet and felt relieved.
+
+The End.
+
+Choices:
+- This choice sits after an accidental ending -> Good Ending
+
+---
+
+Scene: Emphasis Bar
+
+Jamie shouted as loud as possible.
+
+***BOOM***
+
+The blast echoed down the empty hallway.
+
+Choices:
+- Keep going -> Good Ending
+
+---
+
+Scene: Smart Arrow
+
+This choice was typed with a curly arrow from autocorrect.
+
+Choices:
+- Go to the library → Good Ending
+
+---
+
+Scene: Dash Bullet
+
+This choice uses an en-dash bullet from autoformatting.
+
+Choices:
+– Go to the office -> Good Ending
+
+---
+
+Scene: Missing Exit One
+
+Jamie walks into the first room. The writer forgot both the choices and the separator.
+
+Scene: Missing Exit Two
+
+Jamie walks into what was supposed to be a second room.
+
+Choices:
+- Continue -> Good Ending
+
+---
+
+Scene: No Colon
+
+Jamie reaches a fork in the path.
+
+Choices
+- Go left -> Good Ending
+- Go right -> Good Ending
+
+---
+
+Scene: Mid Narration
+
+Jamie weighs the options carefully.
+
+Choices:
+- Open the door -> Good Ending
+But something about this feels wrong.
+- Run back down the hall -> Good Ending
+
+---
+
+Scene: Empty Prompt
+
+Jamie hesitates at the threshold.
+
+Choices:
+-> Good Ending
+
+---
+
+Scene: Twins
+
+The first room that was named Twins.
+
+Choices:
+- Continue -> Good Ending
+
+---
+
+Scene: Twins
+
+The second room also named Twins, which quietly overwrites the first.
+
+Choices:
+- Continue -> Good Ending
+
+---
+
+Scene: Double Arrow
+
+Jamie sees an arrow drawn with two dashes.
+
+Choices:
+- Go forward --> Good Ending
+
+---
+
+Scene: Good Ending
+
+A clean ending so that every choice above has a real destination.
+
+THE END
