@@ -243,3 +243,16 @@ class StoryParser:
                         has_starting_scene = True
                     choice_count = 0    # Sets choice count for new scene to zero for later states
         return story
+
+    def post_process(self, story: Story) -> None:
+        for scene_tag, scene in story.scenes.items():
+            # If there are no choices, add a default choice to the end of the scene
+            if not scene.choices:
+                self.notes.append(errors.ErrText.DEAD_END)
+                scene.choices.append(Choice("(IMPLIED_ENDING)", "theend"))
+            # Otherwise check for the presence of "theend" in choices along with other valid choices
+            elif {"theend"} < {choice.next_scene for choice in scene.choices}:
+                # Note that this scene has both "theend" and other valid choices
+                # Ending will be removed from the graph to allow choices to proceed
+                self.notes.append(errors.ErrText.ENDING_WITH_CHOICES)
+                scene.choices = [choice for choice in scene.choices if choice.next_scene != "theend"]

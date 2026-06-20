@@ -41,6 +41,7 @@ def main():
         parser_mode = Mode.NORMAL
     story_parser = StoryParser(parser_mode)
     story = story_parser.process_story(args.story_file)
+    story_parser.post_process(story)
     cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
 
     # Present story introduction and instructions
