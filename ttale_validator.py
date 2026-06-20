@@ -7,14 +7,27 @@ Description: A standalone script to validate a TaleTangler story file and report
 Usage: 
 """
 import argparse
-from errors import story_exists, report_errors
+from errors import story_exists, report_errors, ErrText
 from story_models import Story
 from story_parser import StoryParser, Mode
 
 
-def validate_story(story: Story, verbose_mode: bool):
-    print("Story graph validation not yet implemented.")
-    print("Report will include only story file errors.")
+def confirm_endings(story: Story, story_parser: StoryParser) -> None:
+    story_endings = 0
+    for scene_tag, scene in story.scenes.items():
+        for choice in scene.choices:
+            # Counting the number of story endings in the file
+            if choice.next_scene == "theend":
+                story_endings += 1
+            # Choice points to a nonexistent scene
+            elif choice.next_scene not in story.scenes and choice.next_scene != "no-destination":
+                story_parser.handle_error(ErrText.INVALID_DESTINATION, scene_tag)
+    if story_endings == 0:
+        story_parser.handle_error(ErrText.NO_ENDINGS, "(STORY_LEVEL)")
+
+
+def validate_story(story: Story, story_parser: StoryParser, start_scene: str) -> bool:
+    confirm_endings(story, story_parser)
     return True     # Will eventually return False if any problems are found
 
 
@@ -33,9 +46,10 @@ def main():
     else:
         parser_mode = Mode.VALIDATE
     story_parser = StoryParser(parser_mode)
-    story, cur_scene = story_parser.process_story(args.story_file)
+    story = story_parser.process_story(args.story_file)
+    start_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
     if not story_parser.errors:
-        validate_story(story, verbose_mode)
+        validate_story(story, story_parser, start_scene)
     report_errors(story_parser.errors, story_parser.notes, verbose_mode)
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ import argparse
 import os
 from story_parser import StoryParser, Mode
 from errors import story_exists
+from ttale_validator import confirm_endings
 
 
 def present_reader_instructions():
@@ -42,6 +43,7 @@ def main():
     story_parser = StoryParser(parser_mode)
     story = story_parser.process_story(args.story_file)
     story_parser.post_process(story)
+    confirm_endings(story)
     cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
 
     # Present story introduction and instructions

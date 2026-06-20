@@ -46,7 +46,7 @@ class StoryParser:
         self.cur_line = 0
         self.untagged_scene_count = 0
     
-    def _handle_error(self, this_error: errors.ErrText, scene: str | None = None) -> None:
+    def handle_error(self, this_error: errors.ErrText, scene: str | None = None) -> None:
         if self.mode == Mode.NORMAL:
             raise errors.FileFormatError(this_error.code)
         elif self.mode == Mode.VERBOSE:
@@ -120,7 +120,7 @@ class StoryParser:
             if not scene_tag:
                 self.untagged_scene_count += 1
                 scene_tag = f"untagged-{self.untagged_scene_count:02d}"
-                self._handle_error(errors.ErrText.NO_SCENE_TAG, scene_tag)
+                self.handle_error(errors.ErrText.NO_SCENE_TAG, scene_tag)
             self.state = State.DESCRIPTION  # This state is always a single line
 
         return scene_tag, scene
@@ -160,7 +160,7 @@ class StoryParser:
                 )
             story.scenes[self.active_scene].description.append(line.strip())
         else:
-            self._handle_error(errors.ErrText.NO_ACTIVE_SCENE)
+            self.handle_error(errors.ErrText.NO_ACTIVE_SCENE)
 
 
     def parse_choices(self, line: str, choice_count: int) -> tuple[str, str] | None:
@@ -179,7 +179,7 @@ class StoryParser:
                 return None
             self.active_choices_section = True
             if line[8:]:    # Unexpected text after "choices:" will be processed as a choice
-                self._handle_error(errors.ErrText.INLINE_CHOICE_ADDED)
+                self.handle_error(errors.ErrText.INLINE_CHOICE_ADDED)
                 # The remaining text on this line will fall through to the rest of the parser
                 line = line[8:].strip()
             else:   # "choices:" was by itself on the line and can be skipped
@@ -196,12 +196,12 @@ class StoryParser:
             self.active_choices_section = False
             return line, "theend"
         if not looks_like_choice(line):
-            self._handle_error(errors.ErrText.MALFORMED_CHOICE)
+            self.handle_error(errors.ErrText.MALFORMED_CHOICE)
             return None
         prompt, next_scene, *extra = line.split("->")
         next_scene = self.normalize(next_scene)
         if extra or not next_scene:     # Choice line must have exactly one "->"
-            self._handle_error(errors.ErrText.MALFORMED_CHOICE)
+            self.handle_error(errors.ErrText.MALFORMED_CHOICE)
             # Instead of assuming which scene tag is intended when more than one exists, assign "no-destination" instead
             next_scene = "no-destination"
         prompt = prompt.strip("-").strip()
@@ -234,7 +234,7 @@ class StoryParser:
                 if self.state == State.TAG:
                     scene_tag, scene = self.parse_tagline(line)
                     if scene_tag in story.scenes:
-                        self._handle_error(errors.ErrText.DUPLICATE_SCENE_TAG, scene_tag)
+                        self.handle_error(errors.ErrText.DUPLICATE_SCENE_TAG, scene_tag)
                         continue  # Any duplicate tags should be skipped
                     self.active_scene = scene_tag
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
