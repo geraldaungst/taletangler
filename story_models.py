@@ -61,6 +61,8 @@ class Scene:
     def __init__(self, description: list[str], choices: list[Choice]):
         self.description = description
         self.choices = choices
+        self.connected = False
+        self.starting_scene = False
 
     def __repr__(self):
         scene_strings = ["**SCENE START**", "\n".join(self.description)]

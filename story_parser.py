@@ -46,7 +46,7 @@ class StoryParser:
         self.cur_line = 0
         self.untagged_scene_count = 0
     
-    def _handle_error(self, this_error: errors.ErrText) -> None:
+    def _handle_error(self, this_error: errors.ErrText, scene: str | None = None) -> None:
         if self.mode == Mode.NORMAL:
             raise errors.FileFormatError(this_error.code)
         elif self.mode == Mode.VERBOSE:
@@ -56,7 +56,7 @@ class StoryParser:
             self.errors.append(
                 errors.TTError(
                     this_error.code,
-                    self.active_scene,
+                    scene if scene is not None else self.active_scene,
                     self.cur_line,
                     this_error.value,
                 )
@@ -120,8 +120,7 @@ class StoryParser:
             if not scene_tag:
                 self.untagged_scene_count += 1
                 scene_tag = f"untagged-{self.untagged_scene_count:02d}"
-                self._handle_error(errors.ErrText.NO_SCENE_TAG)
-            self.active_scene = scene_tag
+                self._handle_error(errors.ErrText.NO_SCENE_TAG, scene_tag)
             self.state = State.DESCRIPTION  # This state is always a single line
 
         return scene_tag, scene
@@ -135,10 +134,8 @@ class StoryParser:
         if norm_line in ["choices:", "theend"]:
             self.state = State.CHOICES
         elif norm_line == "scene:":
-            self._handle_error(errors.ErrText.NO_CHOICES)
             self.state = State.TAG
         elif line.strip()[:3] in SCENE_SEPARATORS:
-            self._handle_error(errors.ErrText.NO_CHOICES)
             self.state = State.SCENE
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
             if norm_line[:8] == "choices:":
@@ -211,10 +208,10 @@ class StoryParser:
         return prompt, next_scene
 
 
-    def process_story(self, story_file: str) -> tuple[Story, str | None]:
+    def process_story(self, story_file: str) -> Story:
         self.state = State.FRONTMATTER
         story = Story("Untitled", "Anonymous")  # Create with default title and author
-        starting_scene = None
+        has_starting_scene = False
         choice_count = 0
         with open(story_file) as sf:
             for line in sf:
@@ -236,8 +233,13 @@ class StoryParser:
                     #   State.SCENE: continue to the next line of text
                 if self.state == State.TAG:
                     scene_tag, scene = self.parse_tagline(line)
+                    if scene_tag in story.scenes:
+                        self._handle_error(errors.ErrText.DUPLICATE_SCENE_TAG, scene_tag)
+                        continue  # Any duplicate tags should be skipped
+                    self.active_scene = scene_tag
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
-                    if starting_scene is None:   # First scene in the file is the starting scene
-                        starting_scene = scene_tag
+                    if not has_starting_scene:   # First scene in the file is the starting scene
+                        story.scenes[scene_tag].starting_scene = True
+                        has_starting_scene = True
                     choice_count = 0    # Sets choice count for new scene to zero for later states
-        return story, starting_scene
+        return story

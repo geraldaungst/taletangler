@@ -25,10 +25,18 @@ class ErrText(Enum):
     UNEXPECTED_FRONTMATTER = "Unexpected text before the 'Scene:' tag line. Text was ignored."
     APPEARS_LIKE_CHOICE = "Line appears to be a choice, but is not in the 'Choices:' section."
     MALFORMED_CHOICE = "Choice text not formatted correctly. Must begin with '-' and contain one '->'."
-    NO_CHOICES = "No choices were found for one or more scenes."
+    # NO_CHOICES error was deprecated by the choice to add the DEAD_END note below
+    # NO_CHOICES = "No choices were found for one or more scenes."
     DUPLICATE_CHOICES_SECTION = "Scene contains two 'Choices:' sections. All choices from the second section were included in the first."
     INLINE_CHOICE_ADDED = "Unexpected text after 'Choices:' appears to be a choice: added to choices list."
     INLINE_CHOICE_INVALID = "Unexpected text after 'Choices:' ignored: does not appear to be a choice."
+    DUPLICATE_SCENE_TAG = "Duplicate scene tag found. File processing cannot continue until all tags are unique."
+    INVALID_DESTINATION = "Invalid destination tag. Choice must lead to an existing scene."
+    NO_ENDINGS = "No ending scene found. Story cannot end."
+    SELF_LOOP = "Choice leads to the same scene."
+    UNREACHABLE_SCENE = "No path of choices leads to this scene. Readers will never see it."
+    DEAD_END = "Scene has no choices and no 'THE END'. The validator added an implied ending automatically."
+    ENDING_WITH_CHOICES = "Scene contains 'THE END' and choices. Ending will be ignored so choices are offered to the reader."
 
     @property
     def code(self):

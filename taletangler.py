@@ -40,7 +40,8 @@ def main():
     else:
         parser_mode = Mode.NORMAL
     story_parser = StoryParser(parser_mode)
-    story, cur_scene = story_parser.process_story(args.story_file)
+    story = story_parser.process_story(args.story_file)
+    cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
 
     # Present story introduction and instructions
     present_reader_instructions()
