@@ -43,22 +43,22 @@ def main():
     story_parser = StoryParser(parser_mode)
     story = story_parser.process_story(args.story_file)
     story_parser.post_process(story)
-    confirm_endings(story)
-    cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
+    if confirm_endings(story):
+        cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
 
-    # Present story introduction and instructions
-    present_reader_instructions()
-    print(f"{story.title.center(72)}\n")
-    print(f"by {story.author}".center(72))
-    if story.instructions:
-        pass    # This will be written later
-    # Main game loop pseudocode
-    while True:
-        story.display_scene(cur_scene)
-        cur_scene = story.get_reader_choice(cur_scene)
-        if cur_scene == "theend":
-            break
-    handle_story_ending()
+        # Present story introduction and instructions
+        present_reader_instructions()
+        print(f"{story.title.center(72)}\n")
+        print(f"by {story.author}".center(72))
+        if story.instructions:
+            pass    # This will be written later
+        # Main game loop pseudocode
+        while True:
+            story.display_scene(cur_scene)
+            cur_scene = story.get_reader_choice(cur_scene)
+            if cur_scene == "theend":
+                break
+        handle_story_ending()
 
 if __name__ == "__main__":
     main()

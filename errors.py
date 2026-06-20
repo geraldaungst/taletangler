@@ -14,7 +14,7 @@ from collections import Counter
 class TTError:
     type: str
     scene: str
-    line: int
+    line: int | None
     text: str
     duplicate_choice_boundary: int | None = None
 
@@ -84,7 +84,8 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
             if error.scene != scene_group:
                 scene_group = error.scene
                 print(f"\n{prefix} {scene_group}:")
-            print(f"    Line {error.line}", end="")
+            if error.line:
+                print(f"    Line {error.line}", end="")
             if error.duplicate_choice_boundary is not None:
                 print(
                     f", (extra choices begin with choice {error.duplicate_choice_boundary})",
