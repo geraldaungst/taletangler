@@ -41,9 +41,9 @@ def dfs_recursive(story: Story, scene_tag: str, visited: set | None = None) -> N
     visited.add(scene_tag)
     story.scenes[scene_tag].connected = True
 
-    # Recursively visit all unvisited neighbors
+    # Recursively visit all unvisited neighbors, ignoring those that are not valid scene tags
     for neighbor in story.scenes[scene_tag].choices:
-        if neighbor.next_scene not in visited:
+        if neighbor.next_scene not in visited and neighbor.next_scene in story.scenes:
             dfs_recursive(story, neighbor.next_scene, visited)
 
 

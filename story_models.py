@@ -31,7 +31,8 @@ class Story:
                 print(f"{option}: {choice.prompt}")
         print("\n")
 
-    def get_reader_choice(self, cur_scene: str):
+    # TODO: Refactor this function to accept additional inputs, such as 'quit' or 'save'
+    def get_reader_choice(self, cur_scene: str) -> str:
         choice = 0
         if self.scenes[cur_scene].choices[0].next_scene == "theend":
             return "theend"
