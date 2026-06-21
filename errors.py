@@ -37,6 +37,8 @@ class ErrText(Enum):
     UNREACHABLE_SCENE = "No path of choices leads to this scene. Readers will never see it."
     DEAD_END = "Scene has no choices and no 'THE END'. The validator added an implied ending automatically."
     ENDING_WITH_CHOICES = "Scene contains 'THE END' and choices. Ending will be ignored so choices are offered to the reader."
+    EMPTY_STORY = "Story file has no scenes. There is nothing to present to the reader."
+    NO_STARTING_SCENE = "No starting scene found. Story cannot begin."
 
     @property
     def code(self):

@@ -43,7 +43,7 @@ def main():
     story_parser = StoryParser(parser_mode)
     story = story_parser.process_story(args.story_file)
     story_parser.post_process(story)
-    if confirm_endings(story):
+    if confirm_endings(story, story_parser):
         cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)
 
         # Present story introduction and instructions
