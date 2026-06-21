@@ -109,19 +109,16 @@ class StoryParser:
                 errors.ErrText.UNEXPECTED_FRONTMATTER.value
             ))
 
-    def parse_tagline(self, line: str) -> tuple[str | None, Scene | None]:
+    def parse_tagline(self, line: str) -> tuple[str, Scene]:
         # This state is a single line that handles the scene: tag and updates the parser's active scene
         norm_line = self.normalize(line) # normalized line
-        scene = None
-        scene_tag = None
-        if norm_line[:6] == "scene:":   # confirming we are in the right state
-            scene_tag = norm_line[6:]
-            scene = Scene([], [])  # Create a new scene object with empty description and choices
-            if not scene_tag:
-                self.untagged_scene_count += 1
-                scene_tag = f"untagged-{self.untagged_scene_count:02d}"
-                self.handle_error(errors.ErrText.NO_SCENE_TAG, scene_tag)
-            self.state = State.DESCRIPTION  # This state is always a single line
+        scene_tag = norm_line[6:]
+        scene = Scene([], [])  # Create a new scene object with empty description and choices
+        if not scene_tag:
+            self.untagged_scene_count += 1
+            scene_tag = f"untagged-{self.untagged_scene_count:02d}"
+            self.handle_error(errors.ErrText.NO_SCENE_TAG, scene_tag)
+        self.state = State.DESCRIPTION  # This state is always a single line
 
         return scene_tag, scene
 
