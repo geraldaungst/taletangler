@@ -79,7 +79,7 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
         return
     
     print(header)
-    errors = sorted(error_list, key=lambda e: e.scene)
+    errors = sorted(error_list, key=lambda e: e.line if e.line is not None else 0)
     if verbose_mode:
         scene_group = ""
         for error in errors:
@@ -87,13 +87,13 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
                 scene_group = error.scene
                 print(f"\n{prefix} {scene_group}:")
             if error.line:
-                print(f"    Line {error.line}", end="")
+                print(f"    Line {error.line}: ", end="")
             if error.duplicate_choice_boundary is not None:
                 print(
-                    f", (extra choices begin with choice {error.duplicate_choice_boundary})",
+                    f"(extra choices begin with choice {error.duplicate_choice_boundary}) - ",
                     end="",
                 )
-            print(f": {error.text} ")
+            print(f"{error.text} ")
     else:
         error_counter = Counter(error.type for error in errors)
         print(f"Total {error_type}s: {len(errors)}")

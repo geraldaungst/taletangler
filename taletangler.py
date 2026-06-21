@@ -10,7 +10,7 @@ Usage: taletangler.py [storyfile.txt]
 import argparse
 import os
 from story_parser import StoryParser, Mode
-from errors import story_exists
+import errors
 from ttale_validator import confirm_endings
 
 
@@ -31,7 +31,7 @@ def handle_story_ending():
 def main():
     # Open and process the story file
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("story_file", type=story_exists)
+    arg_parser.add_argument("story_file", type=errors.story_exists)
     arg_parser.add_argument("-v", "--verbose", action="store_true")
     # TODO: Consider adding --debug mode for giving debugging output to developer
     # arg_parser.add_argument("-d", "--debug", action="store_true")
@@ -42,6 +42,9 @@ def main():
         parser_mode = Mode.NORMAL
     story_parser = StoryParser(parser_mode)
     story = story_parser.process_story(args.story_file)
+    # First check for an empty story file with no scenes
+    if not story.scenes:    # Story has no scenes
+        story_parser.handle_error(errors.ErrText.EMPTY_STORY, "(STORY_LEVEL)")
     story_parser.post_process(story)
     if confirm_endings(story, story_parser):
         cur_scene = next(tag for tag, scene in story.scenes.items() if scene.starting_scene)

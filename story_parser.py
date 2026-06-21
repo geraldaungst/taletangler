@@ -90,8 +90,6 @@ class StoryParser:
             self.state = State.TAG
         elif line.strip()[:3] in SCENE_SEPARATORS:
             self.state = State.SCENE
-        elif norm_line == "choices:":
-            self.state = State.CHOICES
 
     def parse_scene(self, line: str) -> None:
         # In this state, blank lines are discarded until a "scene:" tag is reached
@@ -224,12 +222,13 @@ class StoryParser:
                     if result:    # If result is not None, it is a valid choice line
                         choice_count += 1
                         prompt, next_scene = result
-                        story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene))
+                        story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene, line_in_file=self.cur_line))
                     # If result is None, state was changed to one of these
                     #   State.TAG: parser will move to the statement below
                     #   State.SCENE: continue to the next line of text
                 if self.state == State.TAG:
                     scene_tag, scene = self.parse_tagline(line)
+                    scene.line_in_file = self.cur_line
                     if scene_tag in story.scenes:
                         self.handle_error(errors.ErrText.DUPLICATE_SCENE_TAG, scene_tag)
                         continue  # Any duplicate tags should be skipped
@@ -245,11 +244,21 @@ class StoryParser:
         for scene_tag, scene in story.scenes.items():
             # If there are no choices, add a default choice to the end of the scene
             if not scene.choices:
-                self.notes.append(errors.ErrText.DEAD_END)
-                scene.choices.append(Choice("(IMPLIED_ENDING)", "theend"))
+                self.notes.append(errors.TTError(
+                    errors.ErrText.DEAD_END.code,
+                    scene_tag,
+                    scene.line_in_file,
+                    errors.ErrText.DEAD_END.value
+                ))
+                scene.choices.append(Choice("(IMPLIED_ENDING)", "theend", line_in_file=scene.line_in_file))
             # Otherwise check for the presence of "theend" in choices along with other valid choices
             elif {"theend"} < {choice.next_scene for choice in scene.choices}:
                 # Note that this scene has both "theend" and other valid choices
                 # Ending will be removed from the graph to allow choices to proceed
-                self.notes.append(errors.ErrText.ENDING_WITH_CHOICES)
+                self.notes.append(errors.TTError(
+                    errors.ErrText.ENDING_WITH_CHOICES.code,
+                    scene_tag,
+                    scene.line_in_file,
+                    errors.ErrText.ENDING_WITH_CHOICES.value
+                ))
                 scene.choices = [choice for choice in scene.choices if choice.next_scene != "theend"]

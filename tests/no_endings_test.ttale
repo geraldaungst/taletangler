@@ -1,0 +1,26 @@
+title: No Endings Test
+author: Gerald Aungst
+
+scene: beginning
+
+This is the first scene in the story.
+
+choices:
+- Go east -> east room
+- Go west -> west room
+
+scene: east room
+
+This is the east room.
+
+choices:
+- Go back -> beginning
+- Crawl through the tunnel that winds west -> west room
+
+scene: west room
+
+This is the west room.
+
+choices:
+- Go back -> beginning
+- Crawl through the tunnel that winds east -> east room

@@ -1,0 +1,55 @@
+scene: Start
+
+You stand at the edge of a dark forest. The trees are tall and old.
+A narrow path leads into the shadows. Behind you, the village lights flicker.
+
+Choices:
+- Go into the forest -> Deep Woods
+- Return to the village -> Village Square
+
+ ---
+
+scene: Deep Woods
+
+The forest closes around you. Something moves in the branches above.
+You hear a low growl to your left and see a glimmer of light to your right.
+
+Choices:
+- Move toward the growl -> Wolf Encounter
+- Move toward the light -> Mysterious Light
+- Run back the way you came -> Start
+
+---
+
+scene: Village Square
+
+The village is warm and safe. Your adventure ends here — for now.
+
+THE END
+
+Choices:
+- Live your best life -> Start
+- Start a thriving cart repair business -> Start
+- Go back to the forest despite your best instincts -> Deep Woods
+
+---
+
+scene: Wolf Encounter
+
+You step toward the growl. A large wolf blocks the path, eyes glowing.
+There is nowhere left to run.
+
+Choices:
+- Run in circles -> Wolf Encounter
+
+
+---
+
+scene: Mysterious Light
+
+A lantern hangs from a branch, left by someone in a hurry.
+You take it. The forest feels a little less frightening now.
+
+Choices:
+- Press deeper into the forest -> Deep Woods
+- Head back toward the village -> Village Square

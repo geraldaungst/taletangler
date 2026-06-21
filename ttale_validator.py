@@ -13,9 +13,6 @@ from story_parser import StoryParser, Mode
 
 
 def confirm_endings(story: Story, story_parser: StoryParser) -> bool:
-    if not story.scenes:    # Story has no scenes
-        story_parser.handle_error(errors.ErrText.EMPTY_STORY, "(STORY_LEVEL)")
-        return False
     story_endings = 0
     confirmed = True
     for scene_tag, scene in story.scenes.items():
@@ -57,17 +54,17 @@ def validate_story(story: Story, story_parser: StoryParser, start_scene: str) ->
                 story_parser.notes.append(errors.TTError(
                     errors.ErrText.SELF_LOOP.code,
                     scene_tag,
-                    None,  # Cannot figure out line number of self-loop
+                    choice.line_in_file,
                     errors.ErrText.SELF_LOOP.value
                 ))
     dfs_recursive(story, start_scene)
     # Produce a note for each scene that is not reachable from the starting scene
-    for scene in story.scenes:
-        if not story.scenes[scene].connected:
+    for scene_tag, scene in story.scenes.items():
+        if not scene.connected:
             story_parser.notes.append(errors.TTError(
                 errors.ErrText.UNREACHABLE_SCENE.code,
-                scene,
-                None,   # Cannot figure out line number of unreachable scene
+                scene_tag,
+                scene.line_in_file,
                 errors.ErrText.UNREACHABLE_SCENE.value
             ))
 
@@ -88,12 +85,17 @@ def main():
         parser_mode = Mode.VALIDATE
     story_parser = StoryParser(parser_mode)
     story = story_parser.process_story(args.story_file)
+    # First check for an empty story file with no scenes
+    if not story.scenes:    # Story has no scenes
+        story_parser.handle_error(errors.ErrText.EMPTY_STORY, "(STORY_LEVEL)")
     # None below is a defensive fallback in case the story file has no starting scene to prevent an exception
-    start_scene = next((tag for tag, scene in story.scenes.items() if scene.starting_scene), None)
-    if start_scene is None: # Story has no starting scene
-        story_parser.handle_error(errors.ErrText.NO_STARTING_SCENE, "(STORY_LEVEL)")
-    elif not story_parser.errors:
-        validate_story(story, story_parser, start_scene)
+    else:
+        story_parser.post_process(story)
+        start_scene = next((tag for tag, scene in story.scenes.items() if scene.starting_scene), None)
+        if start_scene is None: # Story has no starting scene
+            story_parser.handle_error(errors.ErrText.NO_STARTING_SCENE, "(STORY_LEVEL)")
+        elif not story_parser.errors:
+            validate_story(story, story_parser, start_scene)
     errors.report_errors(story_parser.errors, story_parser.notes, verbose_mode)
 
 if __name__ == "__main__":

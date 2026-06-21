@@ -52,20 +52,22 @@ class Story:
 
 
 class Choice:
-    def __init__(self, prompt: str, scene_tag: str):
+    def __init__(self, prompt: str, scene_tag: str, line_in_file: int | None = None):
         self.prompt = prompt
         self.next_scene = scene_tag
+        self.line_in_file: int | None = line_in_file
 
     def __repr__(self):
         return self.prompt + " -> " + self.next_scene
 
 
 class Scene:
-    def __init__(self, description: list[str], choices: list[Choice]):
+    def __init__(self, description: list[str], choices: list[Choice], line_in_file: int | None = None):
         self.description = description
         self.choices = choices
         self.connected = False
         self.starting_scene = False
+        self.line_in_file: int | None = line_in_file
 
     def __repr__(self):
         scene_strings = ["**SCENE START**", "\n".join(self.description)]
