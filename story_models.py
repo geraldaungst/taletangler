@@ -4,12 +4,14 @@ story_models.py
 
 Description: The models and data structures used by TaleTangler
 """
+SINK_NODES = frozenset({"theend", "no-destination"})
+
 class Story:
     def __init__(self, title: str, author: str):
         self.title = title
         self.author = author
         self.instructions = []
-        self.scenes = dict()
+        self.scenes: dict[str, Scene] = {}
 
     def __repr__(self):
         story_strings = [self.title, self.author]
@@ -18,7 +20,7 @@ class Story:
             story_strings.append(f"{self.scenes[scene]}")
         return "\n".join(story_strings)
 
-    def display_scene(self, cur_scene: str | None):
+    def display_scene(self, cur_scene: str):
         print("---")
         for line in self.scenes[cur_scene].description:
             print(line)
@@ -29,7 +31,8 @@ class Story:
                 print(f"{option}: {choice.prompt}")
         print("\n")
 
-    def get_reader_choice(self, cur_scene: str | None):
+    # TODO: Refactor this function to accept additional inputs, such as 'quit' or 'save'
+    def get_reader_choice(self, cur_scene: str) -> str:
         choice = 0
         if self.scenes[cur_scene].choices[0].next_scene == "theend":
             return "theend"
@@ -49,18 +52,22 @@ class Story:
 
 
 class Choice:
-    def __init__(self, prompt: str, scene_tag: str):
+    def __init__(self, prompt: str, scene_tag: str, line_in_file: int | None = None):
         self.prompt = prompt
         self.next_scene = scene_tag
+        self.line_in_file: int | None = line_in_file
 
     def __repr__(self):
         return self.prompt + " -> " + self.next_scene
 
 
 class Scene:
-    def __init__(self, description: list[str], choices: list[Choice]):
+    def __init__(self, description: list[str], choices: list[Choice], line_in_file: int | None = None):
         self.description = description
         self.choices = choices
+        self.connected = False
+        self.starting_scene = False
+        self.line_in_file: int | None = line_in_file
 
     def __repr__(self):
         scene_strings = ["**SCENE START**", "\n".join(self.description)]

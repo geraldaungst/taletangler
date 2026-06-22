@@ -46,7 +46,7 @@ class StoryParser:
         self.cur_line = 0
         self.untagged_scene_count = 0
     
-    def _handle_error(self, this_error: errors.ErrText) -> None:
+    def handle_error(self, this_error: errors.ErrText, scene: str | None = None) -> None:
         if self.mode == Mode.NORMAL:
             raise errors.FileFormatError(this_error.code)
         elif self.mode == Mode.VERBOSE:
@@ -56,7 +56,7 @@ class StoryParser:
             self.errors.append(
                 errors.TTError(
                     this_error.code,
-                    self.active_scene,
+                    scene if scene is not None else self.active_scene,
                     self.cur_line,
                     this_error.value,
                 )
@@ -90,8 +90,6 @@ class StoryParser:
             self.state = State.TAG
         elif line.strip()[:3] in SCENE_SEPARATORS:
             self.state = State.SCENE
-        elif norm_line == "choices:":
-            self.state = State.CHOICES
 
     def parse_scene(self, line: str) -> None:
         # In this state, blank lines are discarded until a "scene:" tag is reached
@@ -109,20 +107,16 @@ class StoryParser:
                 errors.ErrText.UNEXPECTED_FRONTMATTER.value
             ))
 
-    def parse_tagline(self, line: str) -> tuple[str | None, Scene | None]:
+    def parse_tagline(self, line: str) -> tuple[str, Scene]:
         # This state is a single line that handles the scene: tag and updates the parser's active scene
         norm_line = self.normalize(line) # normalized line
-        scene = None
-        scene_tag = None
-        if norm_line[:6] == "scene:":   # confirming we are in the right state
-            scene_tag = norm_line[6:]
-            scene = Scene([], [])  # Create a new scene object with empty description and choices
-            if not scene_tag:
-                self.untagged_scene_count += 1
-                scene_tag = f"untagged-{self.untagged_scene_count:02d}"
-                self._handle_error(errors.ErrText.NO_SCENE_TAG)
-            self.active_scene = scene_tag
-            self.state = State.DESCRIPTION  # This state is always a single line
+        scene_tag = norm_line[6:]
+        scene = Scene([], [])  # Create a new scene object with empty description and choices
+        if not scene_tag:
+            self.untagged_scene_count += 1
+            scene_tag = f"untagged-{self.untagged_scene_count:02d}"
+            self.handle_error(errors.ErrText.NO_SCENE_TAG, scene_tag)
+        self.state = State.DESCRIPTION  # This state is always a single line
 
         return scene_tag, scene
 
@@ -135,10 +129,8 @@ class StoryParser:
         if norm_line in ["choices:", "theend"]:
             self.state = State.CHOICES
         elif norm_line == "scene:":
-            self._handle_error(errors.ErrText.NO_CHOICES)
             self.state = State.TAG
         elif line.strip()[:3] in SCENE_SEPARATORS:
-            self._handle_error(errors.ErrText.NO_CHOICES)
             self.state = State.SCENE
         elif self.active_scene:   # Only process descriptions if there is an active scene to attach them to.
             if norm_line[:8] == "choices:":
@@ -163,7 +155,7 @@ class StoryParser:
                 )
             story.scenes[self.active_scene].description.append(line.strip())
         else:
-            self._handle_error(errors.ErrText.NO_ACTIVE_SCENE)
+            self.handle_error(errors.ErrText.NO_ACTIVE_SCENE)
 
 
     def parse_choices(self, line: str, choice_count: int) -> tuple[str, str] | None:
@@ -182,7 +174,7 @@ class StoryParser:
                 return None
             self.active_choices_section = True
             if line[8:]:    # Unexpected text after "choices:" will be processed as a choice
-                self._handle_error(errors.ErrText.INLINE_CHOICE_ADDED)
+                self.handle_error(errors.ErrText.INLINE_CHOICE_ADDED)
                 # The remaining text on this line will fall through to the rest of the parser
                 line = line[8:].strip()
             else:   # "choices:" was by itself on the line and can be skipped
@@ -199,22 +191,22 @@ class StoryParser:
             self.active_choices_section = False
             return line, "theend"
         if not looks_like_choice(line):
-            self._handle_error(errors.ErrText.MALFORMED_CHOICE)
+            self.handle_error(errors.ErrText.MALFORMED_CHOICE)
             return None
         prompt, next_scene, *extra = line.split("->")
         next_scene = self.normalize(next_scene)
         if extra or not next_scene:     # Choice line must have exactly one "->"
-            self._handle_error(errors.ErrText.MALFORMED_CHOICE)
+            self.handle_error(errors.ErrText.MALFORMED_CHOICE)
             # Instead of assuming which scene tag is intended when more than one exists, assign "no-destination" instead
             next_scene = "no-destination"
         prompt = prompt.strip("-").strip()
         return prompt, next_scene
 
 
-    def process_story(self, story_file: str) -> tuple[Story, str | None]:
+    def process_story(self, story_file: str) -> Story:
         self.state = State.FRONTMATTER
         story = Story("Untitled", "Anonymous")  # Create with default title and author
-        starting_scene = None
+        has_starting_scene = False
         choice_count = 0
         with open(story_file) as sf:
             for line in sf:
@@ -230,14 +222,43 @@ class StoryParser:
                     if result:    # If result is not None, it is a valid choice line
                         choice_count += 1
                         prompt, next_scene = result
-                        story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene))
+                        story.scenes[self.active_scene].choices.append(Choice(prompt, next_scene, line_in_file=self.cur_line))
                     # If result is None, state was changed to one of these
                     #   State.TAG: parser will move to the statement below
                     #   State.SCENE: continue to the next line of text
                 if self.state == State.TAG:
                     scene_tag, scene = self.parse_tagline(line)
+                    scene.line_in_file = self.cur_line
+                    if scene_tag in story.scenes:
+                        self.handle_error(errors.ErrText.DUPLICATE_SCENE_TAG, scene_tag)
+                        continue  # Any duplicate tags should be skipped
+                    self.active_scene = scene_tag
                     story.scenes[self.active_scene] = scene # Adds a new key, value pair to the .scenes dict in story
-                    if starting_scene is None:   # First scene in the file is the starting scene
-                        starting_scene = scene_tag
+                    if not has_starting_scene:   # First scene in the file is the starting scene
+                        story.scenes[scene_tag].starting_scene = True
+                        has_starting_scene = True
                     choice_count = 0    # Sets choice count for new scene to zero for later states
-        return story, starting_scene
+        return story
+
+    def post_process(self, story: Story) -> None:
+        for scene_tag, scene in story.scenes.items():
+            # If there are no choices, add a default choice to the end of the scene
+            if not scene.choices:
+                self.notes.append(errors.TTError(
+                    errors.ErrText.DEAD_END.code,
+                    scene_tag,
+                    scene.line_in_file,
+                    errors.ErrText.DEAD_END.value
+                ))
+                scene.choices.append(Choice("(IMPLIED_ENDING)", "theend", line_in_file=scene.line_in_file))
+            # Otherwise check for the presence of "theend" in choices along with other valid choices
+            elif {"theend"} < {choice.next_scene for choice in scene.choices}:
+                # Note that this scene has both "theend" and other valid choices
+                # Ending will be removed from the graph to allow choices to proceed
+                self.notes.append(errors.TTError(
+                    errors.ErrText.ENDING_WITH_CHOICES.code,
+                    scene_tag,
+                    scene.line_in_file,
+                    errors.ErrText.ENDING_WITH_CHOICES.value
+                ))
+                scene.choices = [choice for choice in scene.choices if choice.next_scene != "theend"]

@@ -1,0 +1,47 @@
+scene: Start
+
+You stand at the edge of a dark forest. The trees are tall and old.
+There is only one way out. You must take it, but it may not go anywhere.
+
+Choices:
+- Go the only way you can -> Nowheresville
+
+ ---
+
+scene: Deep Woods
+
+The forest closes around you. Something moves in the branches above.
+You hear a low growl to your left and see a glimmer of light to your right.
+
+Choices:
+- Move toward the growl -> Wolf Encounter
+- Move toward the light -> Mysterious Light
+- Run back the way you came -> Start
+
+---
+
+scene: Village Square
+
+The village is warm and safe. Your adventure ends here — for now.
+
+THE END
+
+---
+
+scene: Wolf Encounter
+
+You step toward the growl. A large wolf blocks the path, eyes glowing.
+There is nowhere left to run.
+
+THE END
+
+---
+
+scene: Mysterious Light
+
+A lantern hangs from a branch, left by someone in a hurry.
+You take it. The forest feels a little less frightening now.
+
+Choices:
+- Press deeper into the forest -> Deep Woods
+- Head back toward the village -> Village Square

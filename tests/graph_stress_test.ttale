@@ -1,0 +1,80 @@
+title: Graph Stress Test
+author: Test Harness
+
+scene: start
+You stand at the trailhead where every path in this test begins.
+choices:
+- Enter the hub -> hub
+
+scene: hub
+A central clearing with many well-formed paths leading outward.
+choices:
+- Visit the loopback meadow -> loopback
+- Step into the trap -> trap
+- Approach the tangle -> multi
+- Enter the library -> library
+- Walk toward the good ending -> goodending
+- Listen to the echo -> echo
+
+scene: loopback
+A meadow whose trails curve back the way you came.
+choices:
+- Return to the hub -> hub
+- Continue to the good ending -> goodending
+
+scene: goodending
+The intended, reachable conclusion of the story.
+choices:
+- Finish the tale -> theend
+
+scene: trap
+A reachable room whose only door leads back into itself.
+choices:
+- Pace in a circle -> trap
+
+scene: multi
+A tangle where a loop, a broken path, and a real exit all meet.
+choices:
+- Spin in place -> multi
+- Step through the broken archway -> nowhereland
+- Escape to the good ending -> goodending
+
+scene: library
+A reading room with a misremembered route to a hidden place.
+choices:
+- Push the shelf marked secret room -> secretroom
+- Go back to the hub -> hub
+
+scene: hiddenvault
+The vault the library meant to reach, but its tag never matched.
+choices:
+- Slip out to the good ending -> goodending
+
+scene: island
+A lonely island no correct path reaches, circling on itself.
+choices:
+- Wander the shore again -> island
+- Wade toward the marsh -> marsh
+
+scene: marsh
+A sunken marsh, unreached, with a broken path and a private ending.
+choices:
+- Step into the void -> voidland
+- Sink quietly -> theend
+
+scene: attic
+A dusty attic reachable only from the cellar, which is itself unreachable.
+choices:
+- Climb down to the cellar -> cellar
+
+scene: cellar
+A cellar reachable only from the attic, which is itself unreachable.
+choices:
+- Climb up to the attic -> attic
+
+scene: echo
+A chamber that answers itself twice before offering a way out.
+choices:
+- Shout once -> echo
+- Shout again -> echo
+- Leave through the hub -> hub

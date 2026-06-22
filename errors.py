@@ -14,7 +14,7 @@ from collections import Counter
 class TTError:
     type: str
     scene: str
-    line: int
+    line: int | None
     text: str
     duplicate_choice_boundary: int | None = None
 
@@ -25,10 +25,20 @@ class ErrText(Enum):
     UNEXPECTED_FRONTMATTER = "Unexpected text before the 'Scene:' tag line. Text was ignored."
     APPEARS_LIKE_CHOICE = "Line appears to be a choice, but is not in the 'Choices:' section."
     MALFORMED_CHOICE = "Choice text not formatted correctly. Must begin with '-' and contain one '->'."
-    NO_CHOICES = "No choices were found for one or more scenes."
+    # NO_CHOICES error was deprecated by the choice to add the DEAD_END note below
+    # NO_CHOICES = "No choices were found for one or more scenes."
     DUPLICATE_CHOICES_SECTION = "Scene contains two 'Choices:' sections. All choices from the second section were included in the first."
     INLINE_CHOICE_ADDED = "Unexpected text after 'Choices:' appears to be a choice: added to choices list."
     INLINE_CHOICE_INVALID = "Unexpected text after 'Choices:' ignored: does not appear to be a choice."
+    DUPLICATE_SCENE_TAG = "Duplicate scene tag found. File processing cannot continue until all tags are unique."
+    INVALID_DESTINATION = "Invalid destination tag. Choice must lead to an existing scene."
+    NO_ENDINGS = "No ending scene found. Story cannot end."
+    SELF_LOOP = "Choice leads to the same scene."
+    UNREACHABLE_SCENE = "No path of choices leads to this scene. Readers will never see it."
+    DEAD_END = "Scene has no choices and no 'THE END'. The validator added an implied ending automatically."
+    ENDING_WITH_CHOICES = "Scene contains 'THE END' and choices. Ending will be ignored so choices are offered to the reader."
+    EMPTY_STORY = "Story file has no scenes. There is nothing to present to the reader."
+    NO_STARTING_SCENE = "No starting scene found. Story cannot begin."
 
     @property
     def code(self):
@@ -69,20 +79,21 @@ def display_errors(error_list: list[TTError], error_type: str, verbose_mode: boo
         return
     
     print(header)
-    errors = sorted(error_list, key=lambda e: e.scene)
+    errors = sorted(error_list, key=lambda e: e.line if e.line is not None else 0)
     if verbose_mode:
         scene_group = ""
         for error in errors:
             if error.scene != scene_group:
                 scene_group = error.scene
                 print(f"\n{prefix} {scene_group}:")
-            print(f"    Line {error.line}", end="")
+            if error.line:
+                print(f"    Line {error.line}: ", end="")
             if error.duplicate_choice_boundary is not None:
                 print(
-                    f", (extra choices begin with choice {error.duplicate_choice_boundary})",
+                    f"(extra choices begin with choice {error.duplicate_choice_boundary}) - ",
                     end="",
                 )
-            print(f": {error.text} ")
+            print(f"{error.text} ")
     else:
         error_counter = Counter(error.type for error in errors)
         print(f"Total {error_type}s: {len(errors)}")

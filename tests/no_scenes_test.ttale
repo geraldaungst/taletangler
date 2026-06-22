@@ -1,0 +1,10 @@
+title: No Scenes Test
+author: Gerald Aungst
+
+This text is a test of a file. It has no scenes, and the validator should report it as such.
+
+Choices:
+- This is one choice
+- This is another choice -> with a destination
+
+None of the choices above should be captured, however, since there's no scene to attach them to.
