@@ -85,13 +85,13 @@ A line containing `THE END` marks an ending scene. Every story needs at least on
 ---
 
 ## Current Limitations
-- Graph validation is not yet implemented — the validator checks for file formatting problems but does not yet verify that all destinations exist, detect unreachable scenes, or confirm that the story has at least one ending
+- No save/restore - if you exit a story early, you must restart from the beginning
+- Verbose mode for the story engine provides minimal feedback; more detail will be added to reports in the future
 - Terminal interface only
 
 ---
 
 ## Planned Features
-- **Graph validation** — check for unreachable scenes, missing destinations, and scenes with no exits; confirm at least one ending exists
 - **Save and restore** — resume a story in progress; saves are keyed by story identity (title and author) and stored in a platform-appropriate location using platformdirs
 - **Authoring guide** — a plain-language guide for student writers explaining the story file format with examples and common mistakes
 - **Teacher guide** — classroom integration notes, workshop ideas, and tips for using TaleTangler as a writing tool
